@@ -11,43 +11,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Chivo:wght@300..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --pitch:#0A1F16;
-  --panel:#0F2C1F;
-  --raise:#15392A;
-  --chalk:#F4F7F0;
-  --dim:#9FB3A6;
-  --faint:rgba(244,247,240,.14);
-  --cone:#FF6B2C;
-  --saffron:#FFB03A;
-  --flag:#FF5A4D;
-  --rail:396px;
+  --pitch:#0A1F16; --panel:#0F2C1F; --raise:#15392A;
+  --chalk:#F4F7F0; --dim:#9FB3A6; --faint:rgba(244,247,240,.14);
+  --cone:#FF6B2C; --saffron:#FFB03A; --flag:#FF5A4D; --ok:#35C08A;
+  --rail:400px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{
-  background:var(--pitch);color:var(--chalk);
+body{background:var(--pitch);color:var(--chalk);
   font-family:'Chivo',system-ui,sans-serif;font-weight:350;
-  -webkit-font-smoothing:antialiased;overflow:hidden;
-}
+  -webkit-font-smoothing:antialiased;overflow:hidden}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
 .disp{font-family:'Archivo',sans-serif;font-stretch:118%;font-weight:800;letter-spacing:-.015em}
-.eyebrow{
-  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--dim);
-}
 
-/* ---------------------------------------------------------- structure */
 .shell{display:grid;grid-template-columns:var(--rail) 1fr;height:100dvh}
-
-.rail{
-  background:var(--panel);border-right:1px solid var(--faint);
-  display:flex;flex-direction:column;min-height:0;
-}
+.rail{background:var(--panel);border-right:1px solid var(--faint);
+  display:flex;flex-direction:column;min-height:0}
 .railhead{padding:18px 20px 14px;border-bottom:1px solid var(--faint)}
 .wordmark{display:flex;align-items:baseline;gap:9px;text-decoration:none;color:inherit}
 .wordmark .n{font-size:19px;line-height:1}
-.wordmark .t{font-size:10px;letter-spacing:.2em;color:var(--cone);font-family:'IBM Plex Mono',monospace}
+.wordmark .t{font-size:10px;letter-spacing:.2em;color:var(--cone);
+  font-family:'IBM Plex Mono',monospace}
 .addr{margin-top:7px;font-size:11.5px;color:var(--dim);line-height:1.5}
 
 .railbody{overflow-y:auto;flex:1;min-height:0;padding-bottom:26px;scrollbar-width:thin}
@@ -56,27 +41,23 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 .sect{padding:16px 20px;border-bottom:1px solid var(--faint)}
 .sect h3{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
-  font-family:'IBM Plex Mono',monospace;font-weight:500;margin-bottom:12px}
+  font-family:'IBM Plex Mono',monospace;font-weight:500;margin-bottom:12px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.sect h3 em{font-style:normal;letter-spacing:.04em;text-transform:none;opacity:.75}
 
-/* ------------------------------------------------------- the 2D plan */
 .planwrap{position:relative;background:var(--pitch);padding:10px 8px 4px}
 #plan{display:block;width:100%;height:auto;touch-action:none}
-.planhint{
-  text-align:center;font-size:10.5px;color:var(--dim);padding:2px 0 10px;
-  font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;
-}
+.planhint{text-align:center;font-size:10.5px;color:var(--dim);padding:2px 0 10px;
+  font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;line-height:1.6}
 
-/* -------------------------------------------------------- pitch cards */
-.pcard{border:1px solid var(--faint);border-radius:3px;margin-bottom:12px;overflow:hidden}
+.pcard{border:1px solid var(--faint);border-radius:3px;margin-bottom:10px;overflow:hidden}
 .pcard.sel{border-color:var(--cone)}
-.pcard header{
-  display:flex;align-items:center;gap:9px;padding:9px 12px;
-  background:var(--raise);cursor:pointer;
-}
+.pcard header{display:flex;align-items:center;gap:9px;padding:9px 12px;
+  background:var(--raise);cursor:pointer}
 .swatch{width:9px;height:9px;border-radius:1px;flex:none}
 .pcard header .nm{font-size:13px;font-weight:600;flex:1}
-.pcard header .sf{font-size:11.5px;color:var(--dim)}
-.pcard .body{padding:12px 12px 14px;display:none}
+.pcard header .sf{font-size:11.5px;color:var(--dim);font-family:'IBM Plex Mono',monospace}
+.pcard .body{padding:12px 12px 13px;display:none}
 .pcard.sel .body{display:block}
 
 .row{display:flex;align-items:center;gap:10px;margin-bottom:11px}
@@ -87,17 +68,27 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;
   border-radius:50%;background:var(--chalk);border:3px solid var(--cone);cursor:grab}
 .row input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
-  background:var(--chalk);border:3px solid var(--cone);cursor:grab;border-width:3px}
+  background:var(--chalk);border:3px solid var(--cone);cursor:grab}
 .row .val{width:62px;text-align:right;font-size:12px;font-family:'IBM Plex Mono',monospace}
 
-.presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-.chip{
-  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;
-  padding:5px 9px;border:1px solid var(--faint);border-radius:2px;color:var(--dim);
-}
+.clrhead{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--dim);margin:2px 0 7px}
+.clr{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--faint);
+  border:1px solid var(--faint);margin-bottom:12px}
+.clr div{background:var(--panel);padding:7px 9px;display:flex;flex-direction:column;gap:1px}
+.clr span{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim)}
+.clr b{font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;
+  font-variant-numeric:tabular-nums}
+.clr em{font-style:normal;font-size:10px;color:var(--dim);line-height:1.3}
+.clr div.tight b{color:var(--saffron)}
+.clr div.hit b{color:var(--flag)}
+
+.presets{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.05em;
+  padding:5px 9px;border:1px solid var(--faint);border-radius:2px;color:var(--dim)}
 .chip:hover{border-color:var(--cone);color:var(--chalk)}
 
-/* ---------------------------------------------------------- readouts */
 .meters{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--faint);
   border:1px solid var(--faint)}
 .meter{background:var(--panel);padding:11px 12px}
@@ -109,20 +100,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   font-family:'IBM Plex Mono',monospace}
 .meter.neg .v{color:var(--flag)}
 
-/* ------------------------------------------------------------- flags */
 #flags{display:flex;flex-direction:column;gap:7px}
-.flag{display:flex;gap:9px;padding:9px 11px;border-radius:2px;font-size:12px;line-height:1.45;
-  border-left:2px solid}
+.flag{padding:9px 11px;border-radius:2px;font-size:12px;line-height:1.45;border-left:2px solid}
 .flag.err{background:rgba(255,90,77,.1);border-color:var(--flag)}
 .flag.warn{background:rgba(255,176,58,.09);border-color:var(--saffron)}
-.flag.ok{background:rgba(53,192,138,.09);border-color:#35C08A}
-.flag b{font-weight:600}
+.flag.ok{background:rgba(53,192,138,.09);border-color:var(--ok)}
 
-/* -------------------------------------------------------------- stage */
+.locked{display:flex;align-items:center;gap:9px;margin-bottom:8px;font-size:12.5px}
+.locked .lock{width:11px;height:11px;flex:none;opacity:.55}
+.locked .sf{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--dim)}
+.wetnote{margin-top:10px;font-size:11.5px;color:var(--dim);line-height:1.6}
+
 .view{position:relative;background:#e7ece4;min-height:0}
 #stage{position:absolute;inset:0}
 #stage canvas{display:block}
-
 #tags{position:absolute;inset:0;pointer-events:none}
 .tag{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;
   background:rgba(10,31,22,.86);border:1px solid rgba(244,247,240,.22);
@@ -131,34 +122,29 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .tag span{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim)}
 .tag-hot{border-color:var(--cone)}
 
-.hud{position:absolute;left:16px;top:16px;display:flex;gap:6px;flex-wrap:wrap;max-width:calc(100% - 32px)}
-.hud button{
-  background:rgba(10,31,22,.82);border:1px solid rgba(244,247,240,.2);color:var(--chalk);
-  padding:7px 11px;border-radius:2px;font-family:'IBM Plex Mono',monospace;
-  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-}
+.hud{position:absolute;left:16px;top:16px;display:flex;gap:6px;flex-wrap:wrap;
+  max-width:calc(100% - 200px)}
+.hud button{background:rgba(10,31,22,.82);border:1px solid rgba(244,247,240,.2);
+  color:var(--chalk);padding:7px 11px;border-radius:2px;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase}
 .hud button:hover{border-color:var(--cone)}
 .hud button.on{background:var(--cone);border-color:var(--cone);color:#0A1F16;font-weight:600}
 
-.hud2{position:absolute;right:16px;top:16px;display:flex;gap:6px}
-.walkbtn{
-  background:var(--cone);color:#0A1F16;font-weight:700;padding:10px 16px;border-radius:2px;
-  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.11em;text-transform:uppercase;
-}
+.hud2{position:absolute;right:16px;top:16px}
+.walkbtn{background:var(--cone);color:#0A1F16;font-weight:700;padding:10px 16px;
+  border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:11px;
+  letter-spacing:.11em;text-transform:uppercase}
 
-.walkhelp{
-  position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
+.walkhelp{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
   background:rgba(10,31,22,.86);border:1px solid rgba(244,247,240,.2);
-  padding:9px 14px;border-radius:2px;font-size:11.5px;color:var(--chalk);display:none;
-  font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;text-align:center;
-}
+  padding:9px 14px;border-radius:2px;font-size:11.5px;display:none;
+  font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;text-align:center}
 body.walking .walkhelp{display:block}
 body.walking .hud{display:none}
 
-#stick{
-  position:absolute;left:22px;bottom:22px;width:108px;height:108px;border-radius:50%;
-  border:1px solid rgba(244,247,240,.3);background:rgba(10,31,22,.4);display:none;touch-action:none
-}
+#stick{position:absolute;left:22px;bottom:22px;width:108px;height:108px;border-radius:50%;
+  border:1px solid rgba(244,247,240,.3);background:rgba(10,31,22,.4);display:none;touch-action:none}
 #stick i{position:absolute;left:50%;top:50%;width:42px;height:42px;margin:-21px 0 0 -21px;
   border-radius:50%;background:var(--cone);opacity:.85}
 body.walking.touch #stick{display:block}
@@ -166,14 +152,13 @@ body.walking.touch #stick{display:block}
 .credit{padding:14px 20px 22px;font-size:10.5px;color:var(--dim);line-height:1.6;
   font-family:'IBM Plex Mono',monospace}
 
-/* -------------------------------------------------------------- phone */
 @media (max-width:900px){
   body{overflow:auto}
   .shell{grid-template-columns:1fr;height:auto}
   .rail{border-right:0;border-bottom:1px solid var(--faint)}
   .railbody{overflow:visible}
   .view{height:64vh;position:sticky;top:0;z-index:5}
-  .hud{left:10px;top:10px}
+  .hud{left:10px;top:10px;max-width:calc(100% - 150px)}
   .hud2{right:10px;top:10px}
   :root{--rail:100%}
 }
@@ -202,13 +187,20 @@ body.fullstage .view{height:100dvh;position:fixed;inset:0;z-index:50}
 
       <div class="planwrap">
         <svg id="plan" viewBox="-17 -15 103.5 224" aria-label="Suite plan"></svg>
-        <div class="planhint">Drag a pitch to move it. Drag the corner to resize.</div>
+        <div class="planhint">
+          Drag a pitch or a party room to move it.<br>
+          Drag the corner to resize. Dimensions follow the selection.
+        </div>
       </div>
 
       <div class="sect">
         <h3>Pitches</h3>
-        <div id="cards"></div>
-        <div class="presets" id="presets"></div>
+        <div id="cards-p"></div>
+      </div>
+
+      <div class="sect">
+        <h3>Party rooms <em>dry, move anywhere</em></h3>
+        <div id="cards-r"></div>
       </div>
 
       <div class="sect">
@@ -222,8 +214,13 @@ body.fullstage .view{height:100dvh;position:fixed;inset:0;z-index:50}
       </div>
 
       <div class="sect">
-        <h3>Fixed program</h3>
+        <h3>Locked program</h3>
         <div id="prog"></div>
+        <p class="wetnote">
+          The restrooms sit on the sanitary stub and the entry anchors the
+          storefront, so these stay put. Moving the wet core means saw cutting
+          the slab and rerouting underground.
+        </p>
       </div>
 
       <div class="sect" style="border-bottom:0">
@@ -258,9 +255,7 @@ body.fullstage .view{height:100dvh;position:fixed;inset:0;z-index:50}
       <button id="b-dusk">Match light</button>
     </div>
 
-    <div class="hud2">
-      <button class="walkbtn" id="b-walk">Walk through</button>
-    </div>
+    <div class="hud2"><button class="walkbtn" id="b-walk">Walk through</button></div>
 
     <div class="walkhelp" id="walkhelp"></div>
     <div id="stick"><i></i></div>
@@ -274,104 +269,278 @@ body.fullstage .view{height:100dvh;position:fixed;inset:0;z-index:50}
 (function(){
 'use strict';
 
-var SHELL = FPB.SHELL, ROOMS = FPB.ROOMS, BAND = FPB.FRONT_BAND, ft = FPB.ft;
+var SHELL = FPB.SHELL, LOCKED = FPB.LOCKED, ft = FPB.ft;
 var SUITE_SF = SHELL.w * SHELL.d;
+var ENTRY = LOCKED[0];
+var LOCKED_SF = LOCKED.reduce(function(a, r){ return a + r.w * r.d; }, 0);
 
-var PRESETS = [
-  { k:'5v5',        w:45, d:60 },
-  { k:'7v7',        w:57, d:75 },
-  { k:'Futsal',     w:60, d:96 },
-  { k:'Max width',  w:63, d:70 },
-  { k:'Two long',   w:57, d:70 }
+var PITCH_PRESETS = [
+  { k:'5v5',   w:45, d:60 },
+  { k:'7v7',   w:57, d:75 },
+  { k:'Futsal',w:60, d:96 },
+  { k:'Wide',  w:63, d:70 }
+];
+var ROOM_PRESETS = [
+  { k:'Small',    w:16, d:18 },
+  { k:'Standard', w:23.5, d:21 },
+  { k:'Large',    w:26, d:24 }
 ];
 
-var COLORS = ['#FF6B2C', '#FFB03A'];
+var PCOL = ['#FF6B2C', '#FFB03A'];
+var RCOL = ['#FFB03A', '#FF8A3A'];
 
-var fields = load() || JSON.parse(JSON.stringify(FPB.DEFAULT_FIELDS));
-var sel = 0;
+var st = load();
+var fields = st.fields, rooms = st.rooms;
+var sel = { k:'pitch', i:0 };
 
 /* ------------------------------------------------------------- storage */
 
+function enc(list){
+  return list.map(function(o){
+    return [o.x, o.z, o.w, o.d].map(function(n){ return Math.round(n*2)/2; }).join(',');
+  }).join(';');
+}
+function dec(q, n, base){
+  if (!q) return null;
+  var parts = q.split(';');
+  if (parts.length !== n) return null;
+  var out = [];
+  for (var i = 0; i < n; i++){
+    var v = parts[i].split(',').map(Number);
+    if (v.length !== 4 || v.some(isNaN)) return null;
+    out.push({ id:base[i].id, name:base[i].name, x:v[0], z:v[1], w:v[2], d:v[3] });
+  }
+  return out;
+}
 function save(){
   try {
-    var q = fields.map(function(f){
-      return [f.x, f.z, f.w, f.d].map(function(n){ return Math.round(n*2)/2; }).join(',');
-    }).join(';');
-    history.replaceState(null, '', '?p=' + encodeURIComponent(q));
+    var q = '?p=' + encodeURIComponent(enc(fields)) + '&r=' + encodeURIComponent(enc(rooms));
+    history.replaceState(null, '', q);
     localStorage.setItem('fpb-plan', q);
   } catch(e){}
 }
 function load(){
-  var q = null;
-  try {
-    var m = location.search.match(/[?&]p=([^&]+)/);
-    q = m ? decodeURIComponent(m[1]) : localStorage.getItem('fpb-plan');
-  } catch(e){}
-  if (!q) return null;
-  var parts = q.split(';');
-  if (parts.length !== 2) return null;
-  var out = [];
-  for (var i = 0; i < 2; i++){
-    var n = parts[i].split(',').map(Number);
-    if (n.length !== 4 || n.some(isNaN)) return null;
-    out.push({ id:'p'+(i+1), name:'Pitch '+(i+1), x:n[0], z:n[1], w:n[2], d:n[3] });
+  var s = location.search;
+  try { if (!/[?&]p=/.test(s)) s = localStorage.getItem('fpb-plan') || ''; } catch(e){ s = ''; }
+  function grab(k){
+    var m = s.match(new RegExp('[?&]' + k + '=([^&]+)'));
+    return m ? decodeURIComponent(m[1]) : null;
   }
-  return out;
+  return {
+    fields: dec(grab('p'), 2, FPB.DEFAULT_FIELDS) || JSON.parse(JSON.stringify(FPB.DEFAULT_FIELDS)),
+    rooms:  dec(grab('r'), 2, FPB.DEFAULT_ROOMS)  || JSON.parse(JSON.stringify(FPB.DEFAULT_ROOMS))
+  };
 }
 
 /* --------------------------------------------------------- fit checking */
 
-function rects(){
-  return fields.map(function(f){
-    return { x1:f.x, z1:f.z, x2:f.x+f.w, z2:f.z+f.d };
-  });
+function overlap(a, b){
+  var ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+  var oz = Math.min(a.z + a.d, b.z + b.d) - Math.max(a.z, b.z);
+  return (ox > 0.05 && oz > 0.05) ? Math.min(ox, oz) : 0;
+}
+function outside(r){
+  return r.x < -0.05 || r.z < -0.05 ||
+         r.x + r.w > SHELL.w + 0.05 || r.z + r.d > SHELL.d + 0.05;
 }
 
-function overlap(a, b){
-  var ox = Math.min(a.x2, b.x2) - Math.max(a.x1, b.x1);
-  var oz = Math.min(a.z2, b.z2) - Math.max(a.z1, b.z1);
-  return (ox > 0.05 && oz > 0.05) ? { x:ox, z:oz } : null;
+/* One foot grid flood fill from the entry. Anything the fill cannot reach
+   without crossing turf or another room is not properly served. */
+var GW = Math.ceil(SHELL.w), GD = Math.ceil(SHELL.d);
+
+function accessMap(){
+  var blocked = new Uint8Array(GW * GD);
+  var all = fields.concat(rooms).concat(LOCKED);
+  for (var j = 0; j < GD; j++){
+    for (var i = 0; i < GW; i++){
+      var cx = i + 0.5, cz = j + 0.5;
+      for (var k = 0; k < all.length; k++){
+        var r = all[k];
+        if (cx > r.x && cx < r.x + r.w && cz > r.z && cz < r.z + r.d){
+          blocked[j * GW + i] = 1; break;
+        }
+      }
+    }
+  }
+
+  function ring(r){
+    var out = [];
+    var i0 = Math.max(0, Math.floor(r.x - 1.4)), i1 = Math.min(GW - 1, Math.ceil(r.x + r.w + 0.4));
+    var j0 = Math.max(0, Math.floor(r.z - 1.4)), j1 = Math.min(GD - 1, Math.ceil(r.z + r.d + 0.4));
+    for (var j = j0; j <= j1; j++){
+      for (var i = i0; i <= i1; i++){
+        if (blocked[j * GW + i]) continue;
+        var cx = i + 0.5, cz = j + 0.5;
+        if (cx > r.x - 1.4 && cx < r.x + r.w + 1.4 && cz > r.z - 1.4 && cz < r.z + r.d + 1.4){
+          out.push(j * GW + i);
+        }
+      }
+    }
+    return out;
+  }
+
+  var reached = new Uint8Array(GW * GD);
+  var queue = ring(ENTRY);
+  queue.forEach(function(c){ reached[c] = 1; });
+  var head = 0;
+  while (head < queue.length){
+    var c = queue[head++];
+    var i = c % GW, j = (c - i) / GW;
+    if (i > 0)      push(c - 1);
+    if (i < GW - 1) push(c + 1);
+    if (j > 0)      push(c - GW);
+    if (j < GD - 1) push(c + GW);
+  }
+  function push(n){
+    if (reached[n] || blocked[n]) return;
+    reached[n] = 1; queue.push(n);
+  }
+
+  return {
+    served: function(r){ return ring(r).some(function(c){ return reached[c]; }); },
+    freeSF: (function(){ var n = 0; for (var q = 0; q < blocked.length; q++) if (!blocked[q]) n++; return n; })()
+  };
 }
 
 function check(){
-  var out = [], r = rects();
+  var out = [];
 
-  fields.forEach(function(f, i){
-    var a = r[i];
-    if (a.x1 < -0.05 || a.x2 > SHELL.w + 0.05 || a.z2 > SHELL.d + 0.05 || a.z1 < -0.05){
-      out.push({ lv:'err', t:f.name + ' runs past the demising line. Pull it back inside the bay.' });
-    } else if (a.z1 < BAND - 0.05){
-      out.push({ lv:'err', t:f.name + ' overlaps the entry and party room band. The front ' + BAND + ' feet is fixed program.' });
-    }
+  fields.forEach(function(f){
+    if (outside(f)) out.push({ lv:'err', t:f.name + ' runs past the demising line. Pull it back inside the bay.' });
+  });
+  rooms.forEach(function(r){
+    if (outside(r)) out.push({ lv:'err', t:r.name + ' runs past the demising line.' });
   });
 
-  var ov = overlap(r[0], r[1]);
-  if (ov){
-    out.push({ lv:'err', t:'The two pitches overlap by ' + ft(Math.min(ov.x, ov.z)) + '. Move one clear of the other.' });
+  var po = overlap(fields[0], fields[1]);
+  if (po) out.push({ lv:'err', t:'The two pitches overlap by ' + ft(po) + '. Move one clear of the other.' });
+
+  var ro = overlap(rooms[0], rooms[1]);
+  if (ro) out.push({ lv:'err', t:'The two party rooms overlap by ' + ft(ro) + '.' });
+
+  rooms.forEach(function(r){
+    fields.forEach(function(f){
+      var o = overlap(r, f);
+      if (o) out.push({ lv:'err', t:r.name + ' sits on ' + f.name + ', overlapping by ' + ft(o) + '.' });
+    });
+    LOCKED.forEach(function(l){
+      var o = overlap(r, l);
+      if (o) out.push({ lv:'err', t:r.name + ' overlaps the ' + l.name.toLowerCase() + ', which cannot move.' });
+    });
+  });
+
+  /* access, only worth running once the boxes are legal */
+  if (!out.some(function(f){ return f.lv === 'err'; })){
+    var am = accessMap();
+    rooms.forEach(function(r){
+      if (!am.served(r)){
+        out.push({ lv:'err', t:'No way to reach ' + r.name +
+          ' from the entry without crossing turf. Leave a corridor or move it back.' });
+      }
+    });
+    fields.forEach(function(f){
+      if (!am.served(f)){
+        out.push({ lv:'warn', t:f.name + ' is walled in. Players cannot get to it from the entry.' });
+      }
+    });
   }
 
   fields.forEach(function(f, i){
-    var a = r[i];
-    var side = Math.min(a.x1, SHELL.w - a.x2);
+    var side = Math.min(f.x, SHELL.w - (f.x + f.w));
     if (side >= -0.05 && side < 3){
-      out.push({ lv:'warn', t:f.name + ' sits ' + ft(Math.max(0, side)) + ' off the wall. Allow 3 feet minimum for a run out and the net line.' });
+      out.push({ lv:'warn', t:f.name + ' sits ' + ft(Math.max(0, side)) +
+        ' off the wall. Allow 3 feet minimum for a run out and the net line.' });
     }
-    var rear = SHELL.d - a.z2;
+    var rear = SHELL.d - (f.z + f.d);
     if (i === 1 && rear >= -0.05 && rear < 5){
-      out.push({ lv:'warn', t:'Only ' + ft(Math.max(0, rear)) + ' behind ' + f.name + '. The rear overhead door needs a clear staging apron.' });
+      out.push({ lv:'warn', t:'Only ' + ft(Math.max(0, rear)) + ' behind ' + f.name +
+        '. The rear overhead door needs a clear staging apron.' });
     }
     if (f.w < 30 || f.d < 40){
-      out.push({ lv:'warn', t:f.name + ' is under a workable training size at ' + ft(f.w) + ' by ' + ft(f.d) + '.' });
+      out.push({ lv:'warn', t:f.name + ' is under a workable training size at ' +
+        ft(f.w) + ' by ' + ft(f.d) + '.' });
     }
   });
 
-  if (!ov && r[0].z2 <= r[1].z1 + 0.05){
-    var gap = r[1].z1 - r[0].z2;
-    if (gap < 6) out.push({ lv:'warn', t:'Only ' + ft(gap) + ' between the pitches. Six feet or more keeps the shared net line and a cross aisle usable.' });
+  if (!po && fields[0].z + fields[0].d <= fields[1].z + 0.05){
+    var gap = fields[1].z - (fields[0].z + fields[0].d);
+    if (gap < 6) out.push({ lv:'warn', t:'Only ' + ft(gap) +
+      ' between the pitches. Six feet or more keeps the shared net line and a cross aisle usable.' });
   }
 
-  if (!out.length) out.push({ lv:'ok', t:'Both pitches fit the bay with clear run out and circulation.' });
+  rooms.forEach(function(r){
+    if (r.w * r.d < 300){
+      out.push({ lv:'warn', t:r.name + ' is under 300 SF, which fits one table and about six guests.' });
+    }
+    var far = Math.max(0, r.z - (ENTRY.z + ENTRY.d));
+    if (far > 60){
+      out.push({ lv:'warn', t:r.name + ' is a long way back from the welcome desk. Harder to supervise and harder to staff.' });
+    }
+  });
+
+  if (!out.length) out.push({ lv:'ok', t:'Everything fits with clear run out, circulation and a route to each room.' });
   return out;
+}
+
+/* ----------------------------------------------------------- clearances */
+
+/* Distance from each face of a box to the nearest thing in that direction,
+   which may be the shell, another pitch, a party room or the locked core.
+   Measuring to the wall every time would be a lie once two pitches stack. */
+
+function shortName(o){
+  if (o.name === 'Party Room A') return 'Party A';
+  if (o.name === 'Party Room B') return 'Party B';
+  if (o.name === 'Entry and Viewing') return 'entry';
+  if (o.name === 'Equipment Storage') return 'storage';
+  return o.name.toLowerCase();
+}
+
+function clearances(o){
+  var others = fields.concat(rooms).concat(LOCKED).filter(function(b){ return b !== o; });
+  function xover(b){ return Math.min(o.x + o.w, b.x + b.w) - Math.max(o.x, b.x) > 0.05; }
+  function zover(b){ return Math.min(o.z + o.d, b.z + b.d) - Math.max(o.z, b.z) > 0.05; }
+
+  var n = { d:o.z, to:'front wall' };
+  var s = { d:SHELL.d - (o.z + o.d), to:'rear wall' };
+  var wst = { d:o.x, to:'west wall' };
+  var e = { d:SHELL.w - (o.x + o.w), to:'demising wall' };
+
+  others.forEach(function(b){
+    if (xover(b)){
+      if (b.z + b.d <= o.z + 0.05){
+        var g = o.z - (b.z + b.d);
+        if (g < n.d){ n = { d:g, to:shortName(b) }; }
+      }
+      if (b.z >= o.z + o.d - 0.05){
+        var g2 = b.z - (o.z + o.d);
+        if (g2 < s.d){ s = { d:g2, to:shortName(b) }; }
+      }
+    }
+    if (zover(b)){
+      if (b.x + b.w <= o.x + 0.05){
+        var g3 = o.x - (b.x + b.w);
+        if (g3 < wst.d){ wst = { d:g3, to:shortName(b) }; }
+      }
+      if (b.x >= o.x + o.w - 0.05){
+        var g4 = b.x - (o.x + o.w);
+        if (g4 < e.d){ e = { d:g4, to:shortName(b) }; }
+      }
+    }
+  });
+
+  return { n:n, s:s, w:wst, e:e };
+}
+
+function clrClass(v){ return v < 0.05 ? 'hit' : v < 3 ? 'tight' : ''; }
+function clrColor(v){ return v < 0.05 ? '#FF5A4D' : v < 3 ? '#FFB03A' : 'rgba(244,247,240,.72)'; }
+
+function clrHTML(o){
+  var c = clearances(o);
+  return [['Front', c.n], ['Back', c.s], ['West', c.w], ['East', c.e]].map(function(p){
+    return '<div class="' + clrClass(p[1].d) + '"><span>' + p[0] + '</span>' +
+      '<b>' + ft(Math.max(0, p[1].d)) + '</b><em>to ' + p[1].to + '</em></div>';
+  }).join('');
 }
 
 /* ------------------------------------------------------------- the plan */
@@ -379,70 +548,71 @@ function check(){
 var SVG = 'http://www.w3.org/2000/svg';
 var plan = document.getElementById('plan');
 
-function el(n, a){
+function el(n, a, cls){
   var e = document.createElementNS(SVG, n);
   for (var k in a) e.setAttribute(k, a[k]);
+  if (cls) e.setAttribute('class', cls);
   return e;
+}
+
+function conflicted(r, list){
+  if (outside(r)) return true;
+  return list.some(function(o){ return o !== r && overlap(r, o); });
 }
 
 function drawPlan(){
   while (plan.firstChild) plan.removeChild(plan.firstChild);
 
-  /* bay outline drawn as a chalked box */
   plan.appendChild(el('rect', { x:0, y:0, width:SHELL.w, height:SHELL.d,
     fill:'rgba(244,247,240,.03)', stroke:'#F4F7F0', 'stroke-width':.9 }));
 
-  /* fixed front band */
-  plan.appendChild(el('rect', { x:0, y:0, width:SHELL.w, height:BAND,
-    fill:'rgba(244,247,240,.05)', stroke:'none' }));
-  ROOMS.forEach(function(r){
-    plan.appendChild(el('rect', { x:r.x, y:r.z, width:r.w, height:r.d,
-      fill:'none', stroke:'rgba(244,247,240,.4)', 'stroke-width':.45 }));
-    if (r.id === 'partyA' || r.id === 'partyB'){
-      plan.appendChild(el('rect', { x:r.x, y:r.z, width:r.w, height:r.d,
-        fill:'rgba(255,176,58,.13)', stroke:'none' }));
-      var t = el('text', { x:r.x + r.w/2, y:r.z + r.d/2 + 1.4, fill:'#FFB03A',
-        'font-size':4.2, 'text-anchor':'middle', 'font-family':'IBM Plex Mono, monospace' });
-      t.textContent = r.id === 'partyA' ? 'PARTY A' : 'PARTY B';
-      plan.appendChild(t);
-    }
-  });
-  var bl = el('line', { x1:0, y1:BAND, x2:SHELL.w, y2:BAND,
-    stroke:'#FFB03A', 'stroke-width':.7, 'stroke-dasharray':'3 2' });
-  plan.appendChild(bl);
+  /* locked program, hatched so it reads as untouchable */
+  var defs = el('defs');
+  var pat = el('pattern', { id:'lockhatch', width:3, height:3,
+    patternUnits:'userSpaceOnUse', patternTransform:'rotate(45)' });
+  pat.appendChild(el('line', { x1:0, y1:0, x2:0, y2:3,
+    stroke:'rgba(244,247,240,.28)', 'stroke-width':.6 }));
+  defs.appendChild(pat);
+  plan.appendChild(defs);
 
-  /* rear overhead door */
+  LOCKED.forEach(function(r){
+    plan.appendChild(el('rect', { x:r.x, y:r.z, width:r.w, height:r.d,
+      fill:'url(#lockhatch)', stroke:'rgba(244,247,240,.45)', 'stroke-width':.5 }));
+    var t = el('text', { x:r.x + r.w/2, y:r.z + r.d/2 + 1.4, fill:'rgba(244,247,240,.6)',
+      'font-size':3.6, 'text-anchor':'middle', 'font-family':'IBM Plex Mono, monospace' });
+    t.textContent = r.id === 'entry' ? 'ENTRY' : r.id === 'rest' ? 'REST' :
+                    r.id === 'office' ? 'OFFICE' : 'STOR';
+    plan.appendChild(t);
+  });
+
   plan.appendChild(el('rect', { x:SHELL.w/2 - 6, y:SHELL.d - 1.2, width:12, height:2.4,
     fill:'#9FB3A6' }));
 
-  /* the two pitches */
-  var r = rects();
-  var bad = overlap(r[0], r[1]);
+  var allF = fields, allR = rooms;
+  var everything = fields.concat(rooms).concat(LOCKED);
 
+  /* pitches */
   fields.forEach(function(f, i){
-    var c = COLORS[i];
-    var g = el('g', { 'data-i': i, style:'cursor:grab' });
-
-    var conflict = bad || f.z < BAND - .05 || f.x < -.05 ||
-      f.x + f.w > SHELL.w + .05 || f.z + f.d > SHELL.d + .05;
+    var bad = conflicted(f, everything);
+    var g = el('g', { 'data-k':'pitch', 'data-i':i, style:'cursor:grab' });
 
     g.appendChild(el('rect', { x:f.x, y:f.z, width:f.w, height:f.d,
-      fill: conflict ? 'rgba(255,90,77,.18)' : 'rgba(53,192,138,.13)',
-      stroke: conflict ? '#FF5A4D' : c,
-      'stroke-width': i === sel ? 1.2 : .8 }));
+      fill: bad ? 'rgba(255,90,77,.18)' : 'rgba(53,192,138,.13)',
+      stroke: bad ? '#FF5A4D' : PCOL[i],
+      'stroke-width': (sel.k === 'pitch' && sel.i === i) ? 1.2 : .8 }));
 
-    /* pitch markings, chalked */
-    var mk = { stroke: conflict ? 'rgba(255,90,77,.6)' : 'rgba(244,247,240,.45)', 'stroke-width':.4, fill:'none' };
-    g.appendChild(el('line', Object.assign({ x1:f.x, y1:f.z + f.d/2, x2:f.x + f.w, y2:f.z + f.d/2 }, mk)));
+    var mk = { stroke: bad ? 'rgba(255,90,77,.6)' : 'rgba(244,247,240,.45)',
+               'stroke-width':.4, fill:'none' };
+    g.appendChild(el('line', Object.assign({ x1:f.x, y1:f.z + f.d/2,
+      x2:f.x + f.w, y2:f.z + f.d/2 }, mk)));
     g.appendChild(el('circle', Object.assign({ cx:f.x + f.w/2, cy:f.z + f.d/2,
-      r: Math.min(f.w, f.d) * 0.15 }, mk)));
+      r:Math.min(f.w, f.d) * 0.15 }, mk)));
     [0, 1].forEach(function(end){
       var pw = f.w * .5, pd = Math.min(f.d * .16, 16);
       g.appendChild(el('rect', Object.assign({ x:f.x + (f.w - pw)/2,
         y: end ? f.z + f.d - pd : f.z, width:pw, height:pd }, mk)));
     });
 
-    /* label */
     var lb = el('text', { x:f.x + f.w/2, y:f.z + f.d/2 - 3, fill:'#F4F7F0',
       'font-size':5, 'text-anchor':'middle', 'font-family':'Archivo, sans-serif',
       'font-weight':800 });
@@ -453,20 +623,84 @@ function drawPlan(){
     d2.textContent = ft(f.w) + ' x ' + ft(f.d);
     g.appendChild(d2);
 
-    /* resize grip at the southeast corner */
-    var grip = el('rect', { x:f.x + f.w - 4, y:f.z + f.d - 4, width:5.5, height:5.5,
-      fill:c, 'data-grip':i, style:'cursor:nwse-resize' });
-    g.appendChild(grip);
-
+    g.appendChild(el('rect', { x:f.x + f.w - 4, y:f.z + f.d - 4, width:5.5, height:5.5,
+      fill:PCOL[i], 'data-grip':1, style:'cursor:nwse-resize' }));
     plan.appendChild(g);
   });
 
-  /* dimension strings down the west side */
+  /* party rooms, drawn last so they sit above the turf and stay grabbable */
+  rooms.forEach(function(r, i){
+    var bad = conflicted(r, everything);
+    var g = el('g', { 'data-k':'room', 'data-i':i, style:'cursor:grab' });
+
+    g.appendChild(el('rect', { x:r.x, y:r.z, width:r.w, height:r.d,
+      fill: bad ? 'rgba(255,90,77,.3)' : 'rgba(255,176,58,.2)',
+      stroke: bad ? '#FF5A4D' : RCOL[i],
+      'stroke-width': (sel.k === 'room' && sel.i === i) ? 1.2 : .8 }));
+
+    /* door swing on whichever face the model put it */
+    var face = FPB.doorFace(r), dw = 3.5;
+    var dx = face === 'e' ? r.x + r.w : face === 'w' ? r.x : r.x + r.w/2;
+    var dz = face === 's' ? r.z + r.d : face === 'n' ? r.z : r.z + r.d/2;
+    var horiz = (face === 'n' || face === 's');
+    g.appendChild(el('line', {
+      x1: horiz ? dx - dw/2 : dx, y1: horiz ? dz : dz - dw/2,
+      x2: horiz ? dx + dw/2 : dx, y2: horiz ? dz : dz + dw/2,
+      stroke:'#0A1F16', 'stroke-width':1.4 }));
+
+    var lb = el('text', { x:r.x + r.w/2, y:r.z + r.d/2 - 1, fill:'#F4F7F0',
+      'font-size':4.2, 'text-anchor':'middle', 'font-family':'Archivo, sans-serif',
+      'font-weight':800 });
+    lb.textContent = i ? 'PARTY B' : 'PARTY A';
+    g.appendChild(lb);
+    var d2 = el('text', { x:r.x + r.w/2, y:r.z + r.d/2 + 4, fill:'#0A1F16',
+      'font-size':3.4, 'text-anchor':'middle', 'font-family':'IBM Plex Mono, monospace' });
+    d2.textContent = FPB.seats(r) + ' seats';
+    g.appendChild(d2);
+
+    g.appendChild(el('rect', { x:r.x + r.w - 3.4, y:r.z + r.d - 3.4, width:4.6, height:4.6,
+      fill:RCOL[i], 'data-grip':1, style:'cursor:nwse-resize' }));
+    plan.appendChild(g);
+  });
+
   dimline(-8, 0, -8, SHELL.d, ft(SHELL.d));
   dimline(0, -7, SHELL.w, -7, ft(SHELL.w));
-  fields.forEach(function(f, i){
-    dimline(f.x - 3.2 - i*0, f.z, f.x - 3.2, f.z + f.d, ft(f.d), COLORS[i]);
+
+  var so = listOf(sel.k)[sel.i];
+  if (so && !outside(so)) drawClearances(so);
+}
+
+function clearDim(x1, y1, x2, y2, val){
+  var col = clrColor(val);
+  var vert = (x1 === x2);
+  plan.appendChild(el('line', { x1:x1, y1:y1, x2:x2, y2:y2, stroke:col,
+    'stroke-width':.4, 'stroke-dasharray':'2 1.4' }));
+  var t = 1.5;
+  [[x1, y1], [x2, y2]].forEach(function(p){
+    var a = vert
+      ? { x1:p[0] - t, y1:p[1], x2:p[0] + t, y2:p[1] }
+      : { x1:p[0], y1:p[1] - t, x2:p[0], y2:p[1] + t };
+    a.stroke = col;
+    a['stroke-width'] = .4;
+    plan.appendChild(el('line', a));
   });
+  var mx = (x1 + x2)/2, my = (y1 + y2)/2;
+  var e = el('text', {
+    x: vert ? mx + 1.8 : mx,
+    y: vert ? my + 1.3 : my - 1.8,
+    fill:col, 'font-size':4.1, 'text-anchor': vert ? 'start' : 'middle',
+    'font-family':'IBM Plex Mono, monospace' });
+  e.textContent = ft(Math.max(0, val));
+  plan.appendChild(e);
+}
+
+function drawClearances(o){
+  var c = clearances(o);
+  var cx = o.x + o.w/2, cz = o.z + o.d/2;
+  clearDim(cx, o.z, cx, o.z - c.n.d, c.n.d);
+  clearDim(cx, o.z + o.d, cx, o.z + o.d + c.s.d, c.s.d);
+  clearDim(o.x, cz, o.x - c.w.d, cz, c.w.d);
+  clearDim(o.x + o.w, cz, o.x + o.w + c.e.d, cz, c.e.d);
 }
 
 function dimline(x1, y1, x2, y2, label, color){
@@ -482,20 +716,18 @@ function dimline(x1, y1, x2, y2, label, color){
   }
   var tx, ty, rot = '';
   if (x1 === x2){
-    tx = x1 - 1.4; ty = (y1 + y2)/2;
-    rot = 'rotate(-90 ' + tx + ' ' + ty + ')';
-  } else {
-    tx = (x1 + x2)/2; ty = y1 - 1.6;
-  }
+    tx = x1 - 1.4; ty = (y1 + y2)/2; rot = 'rotate(-90 ' + tx + ' ' + ty + ')';
+  } else { tx = (x1 + x2)/2; ty = y1 - 1.6; }
   var e = el('text', { x:tx, y:ty, fill:color, 'font-size':4,
     'text-anchor':'middle', 'font-family':'IBM Plex Mono, monospace', transform:rot });
   e.textContent = label;
   plan.appendChild(e);
 }
 
-/* ---------------------------------------------------------- plan input */
+/* ----------------------------------------------------------- plan input */
 
 var drag = null;
+function listOf(k){ return k === 'room' ? rooms : fields; }
 
 function toPlan(e){
   var p = plan.createSVGPoint();
@@ -503,35 +735,30 @@ function toPlan(e){
   p.x = t.clientX; p.y = t.clientY;
   return p.matrixTransform(plan.getScreenCTM().inverse());
 }
-
 function snap(v){ return Math.round(v * 2) / 2; }
 
 plan.addEventListener('pointerdown', function(e){
-  var g = e.target.closest('g[data-i]');
+  var g = e.target.closest ? e.target.closest('g[data-i]') : null;
   if (!g) return;
-  var i = +g.getAttribute('data-i');
-  sel = i; renderCards();
-  var p = toPlan(e);
-  drag = {
-    i: i,
-    grip: e.target.hasAttribute('data-grip'),
-    ox: p.x - fields[i].x,
-    oz: p.y - fields[i].z,
-    w0: fields[i].w, d0: fields[i].d
-  };
-  plan.setPointerCapture(e.pointerId);
+  var k = g.getAttribute('data-k'), i = +g.getAttribute('data-i');
+  sel = { k:k, i:i };
+  renderCards();
+  var p = toPlan(e), o = listOf(k)[i];
+  drag = { k:k, i:i, grip:e.target.hasAttribute('data-grip'), ox:p.x - o.x, oz:p.y - o.z };
+  if (plan.setPointerCapture) plan.setPointerCapture(e.pointerId);
   e.preventDefault();
 });
 
 plan.addEventListener('pointermove', function(e){
   if (!drag) return;
-  var p = toPlan(e), f = fields[drag.i];
+  var p = toPlan(e), o = listOf(drag.k)[drag.i];
+  var isRoom = drag.k === 'room';
   if (drag.grip){
-    f.w = Math.max(20, Math.min(SHELL.w, snap(p.x - f.x)));
-    f.d = Math.max(30, Math.min(SHELL.d - BAND, snap(p.y - f.z)));
+    o.w = Math.max(isRoom ? 10 : 20, Math.min(SHELL.w, snap(p.x - o.x)));
+    o.d = Math.max(isRoom ? 10 : 30, Math.min(SHELL.d, snap(p.y - o.z)));
   } else {
-    f.x = snap(p.x - drag.ox);
-    f.z = snap(p.y - drag.oz);
+    o.x = snap(p.x - drag.ox);
+    o.z = snap(p.y - drag.oz);
   }
   commit(true);
 });
@@ -540,61 +767,91 @@ plan.addEventListener('pointermove', function(e){
   plan.addEventListener(ev, function(){ if (drag){ drag = null; commit(); } });
 });
 
-/* --------------------------------------------------------------- cards */
-
-var cards = document.getElementById('cards');
+/* ---------------------------------------------------------------- cards */
 
 function renderCards(){
-  cards.innerHTML = '';
-  fields.forEach(function(f, i){
-    var c = document.createElement('div');
-    c.className = 'pcard' + (i === sel ? ' sel' : '');
-    c.innerHTML =
-      '<header><i class="swatch" style="background:' + COLORS[i] + '"></i>' +
-      '<span class="nm">' + f.name + '</span>' +
-      '<span class="sf mono">' + Math.round(f.w * f.d).toLocaleString() + ' SF</span></header>' +
-      '<div class="body">' +
-        rowHTML(i, 'w', 'Width',  20, SHELL.w, f.w) +
-        rowHTML(i, 'd', 'Length', 30, SHELL.d - BAND, f.d) +
-        rowHTML(i, 'x', 'East',   0,  SHELL.w, f.x) +
-        rowHTML(i, 'z', 'South',  BAND, SHELL.d, f.z) +
-      '</div>';
-    c.querySelector('header').addEventListener('click', function(){
-      sel = i; renderCards(); FPB.focusField(i);
-    });
-    cards.appendChild(c);
-  });
+  renderList('cards-p', fields, 'pitch', PCOL, PITCH_PRESETS);
+  renderList('cards-r', rooms,  'room',  RCOL, ROOM_PRESETS);
+  wire();
+}
 
-  cards.querySelectorAll('input[type=range]').forEach(function(inp){
+function renderList(hostId, list, kind, cols, presets){
+  var host = document.getElementById(hostId);
+  host.innerHTML = list.map(function(o, i){
+    var on = sel.k === kind && sel.i === i;
+    var minW = kind === 'room' ? 10 : 20, minD = kind === 'room' ? 10 : 30;
+    var meta = kind === 'room'
+      ? Math.round(o.w * o.d).toLocaleString() + ' SF &middot; ' + FPB.seats(o) + ' seats'
+      : Math.round(o.w * o.d).toLocaleString() + ' SF';
+    return '<div class="pcard' + (on ? ' sel' : '') + '" data-k="' + kind + '" data-i="' + i + '">' +
+      '<header><i class="swatch" style="background:' + cols[i] + '"></i>' +
+      '<span class="nm">' + o.name + '</span><span class="sf">' + meta + '</span></header>' +
+      '<div class="body">' +
+        rowHTML(kind, i, 'w', 'Width',  minW, SHELL.w, o.w) +
+        rowHTML(kind, i, 'd', 'Length', minD, SHELL.d, o.d) +
+        rowHTML(kind, i, 'x', 'East',   0,    SHELL.w, o.x) +
+        rowHTML(kind, i, 'z', 'South',  0,    SHELL.d, o.z) +
+        '<div class="clrhead">Clear to nearest</div>' +
+        '<div class="clr">' + clrHTML(o) + '</div>' +
+        '<div class="presets">' + presets.map(function(p, pi){
+          return '<button class="chip" data-preset="' + pi + '">' + p.k + ' ' + p.w + 'x' + p.d + '</button>';
+        }).join('') + '</div>' +
+      '</div></div>';
+  }).join('');
+}
+
+function rowHTML(kind, i, k, label, min, max, v){
+  return '<div class="row"><label>' + label + '</label>' +
+    '<input type="range" data-k="' + kind + '" data-i="' + i + '" data-f="' + k +
+    '" min="' + min + '" max="' + max + '" step="0.5" value="' + v + '">' +
+    '<span class="val mono">' + ft(v) + '</span></div>';
+}
+
+function wire(){
+  document.querySelectorAll('.pcard header').forEach(function(h){
+    h.addEventListener('click', function(){
+      var c = h.parentNode;
+      sel = { k:c.dataset.k, i:+c.dataset.i };
+      renderCards();
+      if (sel.k === 'room') FPB.focusRoom(sel.i); else FPB.focusField(sel.i);
+    });
+  });
+  document.querySelectorAll('.pcard input[type=range]').forEach(function(inp){
     inp.addEventListener('input', function(){
-      var i = +inp.dataset.i, k = inp.dataset.k;
-      fields[i][k] = +inp.value;
+      listOf(inp.dataset.k)[+inp.dataset.i][inp.dataset.f] = +inp.value;
       inp.parentNode.querySelector('.val').textContent = ft(+inp.value);
       commit(true);
     });
     inp.addEventListener('change', function(){ commit(); });
   });
+  document.querySelectorAll('.pcard .chip[data-preset]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var c = b.closest('.pcard');
+      var kind = c.dataset.k, i = +c.dataset.i;
+      var p = (kind === 'room' ? ROOM_PRESETS : PITCH_PRESETS)[+b.dataset.preset];
+      var o = listOf(kind)[i];
+      o.w = p.w; o.d = p.d;
+      o.x = Math.max(0, Math.min(SHELL.w - p.w, o.x));
+      o.z = Math.max(0, Math.min(SHELL.d - p.d, o.z));
+      sel = { k:kind, i:i };
+      renderCards(); commit();
+    });
+  });
 }
 
-function rowHTML(i, k, label, min, max, v){
-  return '<div class="row"><label>' + label + '</label>' +
-    '<input type="range" data-i="' + i + '" data-k="' + k + '" min="' + min +
-    '" max="' + max + '" step="0.5" value="' + v + '">' +
-    '<span class="val mono">' + ft(v) + '</span></div>';
-}
-
-/* -------------------------------------------------------------- meters */
-
-var progSF = ROOMS.reduce(function(a, r){ return a + r.w * r.d; }, 0);
+/* --------------------------------------------------------------- meters */
 
 function renderMeters(){
   var turf = fields.reduce(function(a, f){ return a + f.w * f.d; }, 0);
-  var left = SUITE_SF - progSF - turf;
-  var m = document.getElementById('meters');
-  m.innerHTML =
+  var party = rooms.reduce(function(a, r){ return a + r.w * r.d; }, 0);
+  var seats = rooms.reduce(function(a, r){ return a + FPB.seats(r); }, 0);
+  var left = SUITE_SF - LOCKED_SF - turf - party;
+  document.getElementById('meters').innerHTML =
     meter('Suite', Math.round(SUITE_SF), 'SF') +
     meter('Turf', Math.round(turf), 'SF') +
-    meter('Fixed program', Math.round(progSF), 'SF') +
+    meter('Party rooms', Math.round(party), 'SF') +
+    meter('Party seats', seats, 'PAX') +
+    meter('Locked program', Math.round(LOCKED_SF), 'SF') +
     meter('Circulation left', Math.round(left), 'SF', left < 400);
 }
 function meter(k, v, u, neg){
@@ -603,81 +860,71 @@ function meter(k, v, u, neg){
 }
 
 function renderFlags(){
-  var f = document.getElementById('flags');
-  f.innerHTML = check().map(function(c){
-    return '<div class="flag ' + c.lv + '"><span>' + c.t + '</span></div>';
+  document.getElementById('flags').innerHTML = check().map(function(c){
+    return '<div class="flag ' + c.lv + '">' + c.t + '</div>';
   }).join('');
 }
 
 function renderProg(){
-  var host = document.getElementById('prog');
-  host.innerHTML = ROOMS.map(function(r){
-    return '<div class="row" style="margin-bottom:7px">' +
-      '<i class="swatch" style="background:' + r.col + '"></i>' +
-      '<span style="flex:1;font-size:12.5px">' + r.name + '</span>' +
-      '<span class="mono" style="font-size:11.5px;color:var(--dim)">' +
-      Math.round(r.w * r.d).toLocaleString() + ' SF</span></div>';
+  document.getElementById('prog').innerHTML = LOCKED.map(function(r){
+    return '<div class="locked">' +
+      '<svg class="lock" viewBox="0 0 24 24" fill="none" stroke="#F4F7F0" stroke-width="2">' +
+      '<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>' +
+      '<span>' + r.name + '</span>' +
+      '<span class="sf">' + Math.round(r.w * r.d).toLocaleString() + ' SF</span></div>';
   }).join('');
 }
 
-/* -------------------------------------------------------------- commit */
+/* --------------------------------------------------------------- commit */
 
-var pending = false;
+var queued = false;
 function commit(light){
   drawPlan();
   renderMeters();
   renderFlags();
-  cards.querySelectorAll('.pcard').forEach(function(c, i){
-    c.querySelector('.sf').textContent = Math.round(fields[i].w * fields[i].d).toLocaleString() + ' SF';
+  document.querySelectorAll('.pcard').forEach(function(c){
+    var o = listOf(c.dataset.k)[+c.dataset.i];
+    c.querySelector('.sf').innerHTML = c.dataset.k === 'room'
+      ? Math.round(o.w * o.d).toLocaleString() + ' SF &middot; ' + FPB.seats(o) + ' seats'
+      : Math.round(o.w * o.d).toLocaleString() + ' SF';
+    var clr = c.querySelector('.clr');
+    if (clr && c.classList.contains('sel')) clr.innerHTML = clrHTML(o);
   });
-  if (!pending){
-    pending = true;
+  if (!queued){
+    queued = true;
     requestAnimationFrame(function(){
-      pending = false;
+      queued = false;
       FPB.setFields(fields);
+      FPB.setRooms(rooms);
     });
   }
   if (!light) save();
 }
 
-/* -------------------------------------------------------------- presets */
-
-var pr = document.getElementById('presets');
-PRESETS.forEach(function(p){
-  var b = document.createElement('button');
-  b.className = 'chip';
-  b.textContent = p.k + '  ' + p.w + ' x ' + p.d;
-  b.addEventListener('click', function(){
-    fields[sel].w = p.w; fields[sel].d = p.d;
-    fields[sel].x = Math.max(0, Math.min(SHELL.w - p.w, snap((SHELL.w - p.w)/2)));
-    renderCards(); commit();
-  });
-  pr.appendChild(b);
-});
+/* ---------------------------------------------------------------- chrome */
 
 document.getElementById('b-reset').addEventListener('click', function(){
   fields = JSON.parse(JSON.stringify(FPB.DEFAULT_FIELDS));
+  rooms  = JSON.parse(JSON.stringify(FPB.DEFAULT_ROOMS));
+  sel = { k:'pitch', i:0 };
   try { localStorage.removeItem('fpb-plan'); } catch(e){}
   renderCards(); commit();
 });
 
 document.getElementById('b-copy').addEventListener('click', function(e){
   save();
-  var url = location.href;
-  var done = function(){ e.target.textContent = 'Link copied'; setTimeout(function(){ e.target.textContent = 'Copy this layout'; }, 1800); };
-  if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, done);
+  var b = e.currentTarget;
+  var done = function(){ b.textContent = 'Link copied';
+    setTimeout(function(){ b.textContent = 'Copy this layout'; }, 1800); };
+  if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(done, done);
   else done();
 });
-
-/* ---------------------------------------------------------------- view */
 
 var touch = !!(window.matchMedia && window.matchMedia('(hover:none)').matches);
 if (touch) document.body.classList.add('touch');
 
 FPB.init({
-  stage: 'stage',
-  tags: 'tags',
-  fields: fields,
+  stage:'stage', tags:'tags', fields:fields, rooms:rooms,
   onModeChange: function(m){
     document.body.classList.toggle('walking', m === 'walk');
     document.getElementById('b-walk').textContent = m === 'walk' ? 'Exit walk' : 'Walk through';
@@ -716,8 +963,7 @@ document.getElementById('b-dusk').addEventListener('click', function(){
 });
 
 document.getElementById('b-walk').addEventListener('click', function(){
-  var going = !document.body.classList.contains('walking');
-  if (going){
+  if (!document.body.classList.contains('walking')){
     document.body.classList.add('fullstage');
     FPB.resize();
     FPB.setMode('walk');
@@ -727,7 +973,6 @@ document.getElementById('b-walk').addEventListener('click', function(){
   }
 });
 
-/* on screen stick for phones */
 (function(){
   var s = document.getElementById('stick'), knob = s.querySelector('i');
   var cx = 0, cy = 0, R = 44;
@@ -739,13 +984,13 @@ document.getElementById('b-walk').addEventListener('click', function(){
     var r = s.getBoundingClientRect();
     cx = r.left + r.width/2; cy = r.top + r.height/2;
     FPB.stick.active = true;
-    s.setPointerCapture(e.pointerId);
+    if (s.setPointerCapture) s.setPointerCapture(e.pointerId);
     e.preventDefault();
   });
   s.addEventListener('pointermove', function(e){
     if (!FPB.stick.active) return;
     var dx = e.clientX - cx, dy = e.clientY - cy;
-    var d = Math.hypot(dx, dy);
+    var d = Math.sqrt(dx*dx + dy*dy);
     if (d > R){ dx = dx / d * R; dy = dy / d * R; }
     set(dx, dy);
   });
@@ -753,8 +998,6 @@ document.getElementById('b-walk').addEventListener('click', function(){
     s.addEventListener(ev, function(){ FPB.stick.active = false; set(0, 0); });
   });
 })();
-
-/* ---------------------------------------------------------------- boot */
 
 renderCards();
 renderProg();

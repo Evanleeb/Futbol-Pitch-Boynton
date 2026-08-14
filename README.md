@@ -43,11 +43,20 @@ These are set once at the top of `model.js`:
 
 ## What the tenant can change
 
-Everything from the front wall back to `FRONT_BAND` (34 feet) is fixed
-program: entry and viewing, two party rooms, restrooms, office and equipment
-storage. Everything south of that line is theirs to lay out.
+Program comes in two kinds.
 
-Each pitch has four numbers, all in feet:
+**Locked.** The entry anchors the storefront and the restrooms sit on the
+sanitary stub, so the entry, restrooms, office and equipment storage do not
+move. Moving the wet core means saw cutting the slab and rerouting
+underground, which is real money and real schedule, so the tool does not
+offer it.
+
+**Free.** Both party rooms are dry, so they go anywhere in the suite. They
+carry their own four walls and the door places itself on whichever face
+points back toward the entry, so the partitions follow the room instead of
+being drawn by hand.
+
+Pitches and party rooms both have four numbers, all in feet:
 
     x   distance east from the west wall
     z   distance south from the front wall
@@ -56,21 +65,25 @@ Each pitch has four numbers, all in feet:
 
 They can be changed three ways, and all three drive the same state:
 
-- drag a pitch on the chalk plan to move it
+- drag the box on the chalk plan to move it
 - drag the square grip at its southeast corner to resize it
-- use the sliders in the pitch card for exact numbers
+- use the sliders in its card for exact numbers
 
 Everything downstream updates live: the 3D turf, the pitch markings, goal
-size, the containment netting and posts, the area meters and the fit check.
-Values snap to the nearest six inches.
+size, containment netting and posts, room walls, the door face, the tables
+and chairs, seat counts, the area meters and the fit check. Values snap to
+the nearest six inches.
 
 ## Fit check rules
 
 Errors, shown in red:
 
-- a pitch runs past the demising line or the shell
-- a pitch crosses into the fixed front band
+- anything runs past the demising line or the shell
 - the two pitches overlap each other
+- the two party rooms overlap each other
+- a party room sits on a pitch
+- a party room overlaps a locked room
+- there is no route from the entry to a party room without crossing turf
 
 Warnings, shown in amber:
 
@@ -78,35 +91,81 @@ Warnings, shown in amber:
 - less than 5'-0" behind the south pitch, which the overhead door needs
 - less than 6'-0" between the two pitches
 - a pitch under 30' wide or 40' long
+- a pitch that is walled in and cannot be reached from the entry
+- a party room under 300 SF, which seats about six
+- a party room more than 60' back from the welcome desk, which is harder to
+  supervise and harder to staff
 
 The base layout clears all of them.
 
+## Clearances
+
+Select a pitch or a room and four dimension strings appear on the plan, one
+per face, plus a readout in its card. They measure to the nearest thing in
+that direction, not always to the wall, so the south face of Pitch 1 reads to
+Pitch 2 rather than to the rear wall 80 feet beyond it, and the west face of
+Party Room A reads to the entry. The target is named under each figure.
+
+They redraw on every change, so a resize shows you what you are eating into
+as you drag. Colour follows the same thresholds as the fit check: normal
+above 3 feet, amber under 3 feet, red at zero or overlapping.
+
+Dimensions follow the selection rather than showing on everything at once.
+On a plan this narrow, four strings per box across four boxes is unreadable.
+
+### How the access check works
+
+Errors about overlaps are just rectangle maths. The route check is a one foot
+grid over the whole suite. Every cell inside a pitch or a room is marked
+blocked, the fill starts from the free cells ringing the entry, and it spreads
+four ways. Anything the fill cannot touch is not served. That is what catches
+the case where a tenant drags a pitch wall to wall and strands a party room
+behind it, which no amount of overlap checking would find.
+
+Overlap errors suppress the route check, since a layout with boxes sitting on
+top of each other has no meaningful geometry to trace.
+
 ## Base layout
 
-    Pitch 1     57'-0" x 68'-0"   at x 6, z 40
-    Pitch 2     57'-0" x 68'-0"   at x 6, z 115
+    Pitch 1        57'-0" x 68'-0"   at x 6, z 40
+    Pitch 2        57'-0" x 68'-0"   at x 6, z 115
+    Party Room A   23'-6" x 21'-0"   at x 22, z 0      24 seats
+    Party Room B   24'-0" x 21'-0"   at x 45'-6", z 0  24 seats
+
     turf                          7,752 SF
-    fixed program                 2,363 SF
+    party rooms                     998 SF
+    locked program                1,366 SF
     circulation and run out       3,194 SF
 
-## Editing the fixed program
+## Editing the locked program
 
-The front band is the `ROOMS` array in `model.js`. One row per room:
+The locked rooms are the `LOCKED` array in `model.js`. One row per room:
 
-    { id:'partyA', name:'Party Room A', x:22, z:0, w:23.5, d:21,
-      kind:'wood', col:'#FFB03A' }
+    { id:'rest', name:'Restrooms', x:45.5, z:21, w:24, d:13,
+      kind:'tile', col:'#8FA9C4' }
 
-`kind` sets the floor finish: `wood`, `tile`, `carpet` or `seal`.
-The 3D floor, the chalk plan, the area schedule and the label all read from
-the same row, so one edit updates everything.
+`kind` sets the floor finish: `wood`, `tile`, `carpet` or `seal`. The 3D
+floor, the chalk plan, the schedule and the label all read from the same row.
 
-If a room moves or resizes, check that the rows still tile the band cleanly.
-The test harness asserts they do not overlap and that they fill
-`SHELL.w x FRONT_BAND` exactly. Interior partitions are the `P` array in
-`buildRooms()` and are drawn separately, so move those to match.
+The partitions inside the locked cluster are the `LOCKED_WALLS` array, since
+those rooms never move and their shared walls can be stated once. Each row is
+`[x1, z1, x2, z2, doorFraction, doorWidth]`; pass `null` for the fraction to
+get a solid wall. If you move a locked room, move its walls to match.
 
-To change the depth of the fixed band, edit `FRONT_BAND`. The fit check and
-the slider limits both read it.
+Party rooms need no entry here. They are the `DEFAULT_ROOMS` array and build
+their own walls in `buildRooms()`.
+
+To unlock a room, move its row from `LOCKED` to `DEFAULT_ROOMS`, delete the
+`LOCKED_WALLS` rows that bounded it, and add a card for it in `plan.html`.
+The tool assumes exactly two free rooms in a few places, so check
+`enc`, `dec` and the fit check before going past two.
+
+## Seating
+
+Seats are derived, not typed in. `tableGrid()` fits 5' round tables on 8'-6"
+centres with an 18" edge margin and seats six per table. A 23'-6" x 21'-0"
+room takes four tables and seats 24. Shrink a room and the tables, the chairs
+and the seat count all come down together.
 
 ## Presets
 
