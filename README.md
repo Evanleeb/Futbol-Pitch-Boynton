@@ -216,6 +216,31 @@ and copies it. Opening that URL restores the exact layout. The last layout is
 also kept in `localStorage`, so the tenant's own session survives a refresh.
 "Reset to base plan" clears both.
 
+## Kick to enter
+
+The call to action on the cover page is a ball in front of a goal. Clicking
+it boots the ball into the net with a curl and a spin, the net gives, the
+label flips to "Goal," and the page moves to `plan.html` about a second
+later.
+
+It is a real `<a href="plan.html">`, not a scripted button. That matters more
+than it sounds:
+
+- with JavaScript off, or if the animation ever breaks, it is still a link
+- command click and control click open the plan in a new tab, because the
+  handler checks for modifier keys and gets out of the way
+- keyboard users tab to it and press Enter
+- `prefers-reduced-motion: reduce` skips the whole thing and navigates
+  straight through
+
+The net weave is generated in script and clipped to the goal mouth, so
+resizing the goal does not leave the mesh hanging outside the posts.
+
+Two mobile details worth leaving alone. The hover states are gated behind
+`@media (hover:hover) and (pointer:fine)` so iOS does not spend the first tap
+activating a hover state, and `touch-action:manipulation` removes the 300ms
+double tap delay. Both were learned the hard way on an earlier build.
+
 ## Walkthrough
 
 "Walk through" drops the camera to 5'-8" inside the current configuration and
