@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Futbol Pitch Boynton &middot; Suite 650</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Suite 650 at BC Commerce Center, Boynton Beach. A 13,309 square foot clear span end cap laid out for two pitches and two party rooms.">
+<meta property="og:title" content="Futbol Pitch Boynton &middot; Suite 650">
+<meta property="og:description" content="Set your own pitch dimensions, check the fit, then walk the space.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Chivo:wght@300..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --chalk:#F1F4EC;
+  --chalk2:#E4E9DE;
+  --ink:#0A1F16;
+  --ink2:#1D3A2C;
+  --dim:#5E7266;
+  --cone:#E9531A;
+  --saffron:#E09215;
+  --line:rgba(10,31,22,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--chalk);color:var(--ink);
+  font-family:'Chivo',system-ui,sans-serif;font-weight:350;
+  -webkit-font-smoothing:antialiased;line-height:1.55;
+}
+a{color:inherit}
+.disp{font-family:'Archivo',sans-serif;font-stretch:118%;font-weight:800;letter-spacing:-.02em;line-height:.94}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--dim)}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,54px)}
+
+/* ------------------------------------------------------------- topbar */
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:22px 0 0;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand .n{font-size:20px}
+.brand .t{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.24em;color:var(--cone)}
+.top .who{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--dim)}
+
+/* --------------------------------------------------------------- hero */
+.hero{display:grid;grid-template-columns:1fr;gap:34px;padding:clamp(34px,6vw,66px) 0 0}
+@media(min-width:960px){
+  .hero{grid-template-columns:1.02fr 1fr;gap:clamp(30px,4vw,64px);align-items:center;
+    padding-top:clamp(48px,7vw,92px)}
+}
+h1{font-family:'Archivo',sans-serif;font-stretch:124%;font-weight:900;
+  font-size:clamp(40px,7.4vw,84px);line-height:.9;letter-spacing:-.035em}
+h1 em{font-style:normal;color:var(--cone)}
+.lede{margin-top:20px;font-size:clamp(15.5px,1.6vw,18.5px);max-width:38ch;color:var(--ink2)}
+.addr{margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:12px;
+  line-height:1.85;color:var(--dim)}
+
+.cta{display:inline-flex;align-items:center;gap:12px;margin-top:30px;
+  background:var(--cone);color:#fff;padding:15px 24px;text-decoration:none;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:600;border-radius:2px;
+  transition:transform .18s ease, box-shadow .18s ease}
+.cta:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(233,83,26,.28)}
+.cta svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}
+
+/* ------------------------------------------------------- pitch drawing */
+.markwrap{position:relative}
+#mark{display:block;width:100%;height:auto}
+#mark .draw{stroke:var(--ink);fill:none;stroke-width:.9;stroke-linecap:round;
+  opacity:.72}
+#mark .turf{fill:rgba(10,31,22,.045)}
+#mark .band{fill:rgba(224,146,21,.14)}
+#mark .lbl{font-family:'IBM Plex Mono',monospace;font-size:4.4px;fill:var(--dim);
+  letter-spacing:.06em}
+#mark .lblc{font-family:'Archivo',sans-serif;font-weight:800;font-size:5.4px;fill:var(--ink)}
+#mark .ball{fill:var(--cone)}
+.markcap{margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+  color:var(--dim);letter-spacing:.06em;text-align:center}
+
+@media(prefers-reduced-motion:no-preference){
+  #mark .draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+    animation:ink .9s ease forwards var(--d,0s)}
+  #mark .fadein{opacity:0;animation:fade .5s ease forwards var(--d,0s)}
+  #mark .ball{opacity:0;animation:roll .7s cubic-bezier(.2,.7,.3,1) forwards 2.5s}
+}
+@keyframes ink{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+@keyframes roll{from{opacity:0;transform:translateY(-26px)}to{opacity:1;transform:translateY(0)}}
+
+/* -------------------------------------------------------------- stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin-top:clamp(48px,7vw,84px)}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--chalk);padding:22px 20px}
+.stat .k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--dim)}
+.stat .v{font-family:'Archivo',sans-serif;font-stretch:118%;font-weight:800;
+  font-size:clamp(26px,3.4vw,38px);line-height:1.05;margin-top:6px;letter-spacing:-.02em}
+.stat .v small{font-size:13px;font-weight:400;color:var(--dim);margin-left:4px;
+  font-family:'IBM Plex Mono',monospace}
+
+/* -------------------------------------------------------------- notes */
+.notes{display:grid;grid-template-columns:1fr;gap:28px;padding:clamp(44px,6vw,76px) 0}
+@media(min-width:860px){.notes{grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,46px)}}
+.note h2{font-family:'Archivo',sans-serif;font-stretch:112%;font-weight:800;
+  font-size:19px;letter-spacing:-.01em;margin:10px 0 8px}
+.note p{font-size:14.5px;color:var(--ink2)}
+.note .rule{width:26px;height:2px;background:var(--cone)}
+
+footer{border-top:1px solid var(--line);padding:26px 0 40px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);line-height:1.8}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">
+      <span class="n disp">Futbol Pitch</span><span class="t">BOYNTON</span>
+    </div>
+    <div class="who">Butters Construction and Development</div>
+  </div>
+
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Suite 650 &middot; Building A &middot; End cap</p>
+      <h1>Two pitches.<br><em>Your dimensions.</em></h1>
+      <p class="lede">
+        Suite 650 is a clear span end cap with no interior columns, so the
+        turf is not fighting a structural grid. Set the pitch sizes yourself,
+        see what fits, then walk the space at eye level.
+      </p>
+      <div class="addr">
+        BC Commerce Center, Building A<br>
+        8255 Boynton Beach Blvd, Boynton Beach, Florida<br>
+        69&#39;-6&quot; &times; 191&#39;-6&quot; &middot; 32&#39; clear &middot; grade level loading
+      </div>
+      <a class="cta" href="plan.html">
+        Open the space plan
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="markwrap">
+      <svg id="mark" viewBox="-10 -8 89.5 207.5" aria-label="Suite 650 plan being marked out"></svg>
+      <div class="markcap">Base layout &middot; two pitches at 57&#39;-0&quot; &times; 68&#39;-0&quot;</div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><div class="k">Interior area</div><div class="v">13,309<small>SF</small></div></div>
+    <div class="stat"><div class="k">Turf, base layout</div><div class="v">7,752<small>SF</small></div></div>
+    <div class="stat"><div class="k">Clear height</div><div class="v">32<small>FT</small></div></div>
+    <div class="stat"><div class="k">Party rooms</div><div class="v">2<small>ROOMS</small></div></div>
+  </section>
+
+  <section class="notes">
+    <div class="note">
+      <div class="rule"></div>
+      <h2>Nothing in the way</h2>
+      <p>The structural grid falls on the demising lines, so the bay is a
+      true clear span. Pitch length is limited by the shell, not by a column
+      you have to build around.</p>
+    </div>
+    <div class="note">
+      <div class="rule"></div>
+      <h2>Two party rooms up front</h2>
+      <p>Both rooms sit off the entry with the restrooms and the office, so
+      birthday traffic never crosses the turf. Roughly 500 square feet each,
+      sized for four tables and about twenty five guests.</p>
+    </div>
+    <div class="note">
+      <div class="rule"></div>
+      <h2>Change it and see it</h2>
+      <p>Drag a pitch or move the sliders and the model rebuilds as you go.
+      The fit check calls out anything that runs past the demising line,
+      crowds the walls or overlaps the other pitch.</p>
+    </div>
+  </section>
+
+  <footer>
+    Butters Construction and Development &middot; Boca Raton, Florida<br>
+    Schematic for discussion only. Not for construction. Areas and dimensions
+    are approximate and subject to field verification and final architectural
+    and engineering documents. Tenant name shown is a placeholder.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+var SVG = 'http://www.w3.org/2000/svg';
+var svg = document.getElementById('mark');
+var W = 69.5, D = 191.5, BAND = 34;
+
+function el(n, a, cls){
+  var e = document.createElementNS(SVG, n);
+  for (var k in a) e.setAttribute(k, a[k]);
+  if (cls) e.setAttribute('class', cls);
+  return e;
+}
+
+var order = 0;
+function add(e, delay){
+  if (delay !== undefined) e.style.setProperty('--d', delay + 's');
+  svg.appendChild(e);
+  return e;
+}
+function inked(e, delay){
+  svg.appendChild(e);
+  var len = 0;
+  try { len = e.getTotalLength ? e.getTotalLength() : 0; } catch(err){}
+  if (!len && e.tagName === 'rect'){
+    len = (+e.getAttribute('width') + +e.getAttribute('height')) * 2;
+  }
+  e.style.setProperty('--len', len || 200);
+  e.style.setProperty('--d', delay + 's');
+  return e;
+}
+
+/* fills first so the strokes land on top */
+add(el('rect', { x:0, y:0, width:W, height:BAND }, 'band fadein'), 1.5);
+[[6,40,57,68],[6,115,57,68]].forEach(function(f, i){
+  add(el('rect', { x:f[0], y:f[1], width:f[2], height:f[3] }, 'turf fadein'), 1.7 + i*0.15);
+});
+
+/* the bay */
+inked(el('rect', { x:0, y:0, width:W, height:D }, 'draw'), 0);
+
+/* front band line */
+inked(el('line', { x1:0, y1:BAND, x2:W, y2:BAND }, 'draw'), 0.7);
+
+/* room partitions */
+[[22,0,22,BAND],[45.5,0,45.5,21],[22,21,69.5,21],[33,21,33,BAND]].forEach(function(p, i){
+  inked(el('line', { x1:p[0], y1:p[1], x2:p[2], y2:p[3] }, 'draw'), 0.9 + i*0.08);
+});
+
+/* pitches */
+[[6,40,57,68],[6,115,57,68]].forEach(function(f, i){
+  var t = 1.25 + i * 0.25;
+  inked(el('rect', { x:f[0], y:f[1], width:f[2], height:f[3] }, 'draw'), t);
+  inked(el('line', { x1:f[0], y1:f[1]+f[3]/2, x2:f[0]+f[2], y2:f[1]+f[3]/2 }, 'draw'), t+0.35);
+  inked(el('circle', { cx:f[0]+f[2]/2, cy:f[1]+f[3]/2, r:9 }, 'draw'), t+0.45);
+  [0,1].forEach(function(end){
+    inked(el('rect', { x:f[0]+(f[2]-28)/2, y: end ? f[1]+f[3]-11 : f[1], width:28, height:11 }, 'draw'), t+0.55);
+  });
+  var lb = el('text', { x:f[0]+f[2]/2, y:f[1]+f[3]/2-11, 'text-anchor':'middle' }, 'lblc fadein');
+  lb.textContent = 'PITCH ' + (i+1);
+  add(lb, t + 0.8);
+});
+
+/* labels */
+[['ENTRY',11,18],['PARTY A',33.5,11],['PARTY B',57.5,11],['REST',57.5,28],['OFFICE',27.5,28]]
+.forEach(function(l, i){
+  var t = el('text', { x:l[1], y:l[2], 'text-anchor':'middle' }, 'lbl fadein');
+  t.textContent = l[0];
+  add(t, 1.9 + i*0.07);
+});
+
+/* the ball drops onto the north pitch centre spot */
+add(el('circle', { cx:34.75, cy:74, r:2.2 }, 'ball'));
+})();
+</script>
+</body>
+</html>
