@@ -45,20 +45,31 @@ These are set once at the top of `model.js`:
 
 Program comes in two kinds.
 
-**Locked.** One uniform strip along the north wall, ten feet deep, tiling the
-full 69'-6" of the bay:
+**Locked.** One strip along the north wall, fifteen feet deep with a flat
+south edge, tiling the full 69'-6" of the bay:
 
-    Entry and Viewing    35'-6" x 10'-0"     355 SF
+    Entry and Viewing    35'-6" x 15'-0"     532 SF
     Office               10'-0" x 10'-0"     100 SF
     Storage              10'-0" x 10'-0"     100 SF
     Changing Room A       7'-0" x 10'-0"      70 SF
     Changing Room B       7'-0" x 10'-0"      70 SF
-                                             695 SF
+    Back of House hall   34'-0" x  5'-0"     170 SF
+                                           1,043 SF
 
 Each changing room carries a 3'-0" transfer shower with a curb and glass
-panel, one water closet and one lavatory. Nothing in the strip steps down
-into the open floor, which is the point: however the party rooms get dragged
-around, no leftover corner is created behind them.
+panel, one water closet and one lavatory.
+
+The corridor runs behind the office, storage and both changing rooms. Every
+one of them opens onto it, so nothing is reached by walking through anything
+else. It meets the lobby at its west end and has a second door to the open
+floor beside the changing rooms, so players coming off the turf reach a
+shower without crossing the lobby.
+
+Nothing in the strip steps down into the open floor, which is the point:
+however the party rooms get dragged around, no leftover corner is created
+behind them. The test harness samples the whole 69'-6" x 15'-0" rectangle on
+a half foot grid and asserts every point falls in exactly one room, and
+separately that the entire south face sits at z 15.
 
 The strip does not move. The entry anchors the storefront and the changing
 rooms sit on the sanitary stub, and showers need floor drains sloped to that
@@ -147,18 +158,18 @@ top of each other has no meaningful geometry to trace.
 
 ## Base layout
 
-    Pitch 1        57'-0" x 68'-0"   at x 6,  z 43     
-    Pitch 2        57'-0" x 68'-0"   at x 6,  z 118
-    Party Room A   22'-0" x 21'-0"   at x 8,  z 16     24 seats
-    Party Room B   22'-0" x 21'-0"   at x 36, z 16     24 seats
+    Pitch 1        57'-0" x 64'-0"   at x 6,  z 48
+    Pitch 2        57'-0" x 64'-0"   at x 6,  z 119
+    Party Room A   22'-0" x 21'-0"   at x 8,  z 21     24 seats
+    Party Room B   22'-0" x 21'-0"   at x 36, z 21     24 seats
 
-    turf                          7,752 SF
+    turf                          7,296 SF
     party rooms                     924 SF
-    locked strip                    695 SF
-    circulation and run out       3,938 SF
+    locked strip                  1,043 SF
+    circulation and run out       4,047 SF
 
 Six feet clear between the locked strip and the party rooms, six between the
-party rooms and Pitch 1, seven between the pitches, and 5'-6" behind Pitch 2
+party rooms and Pitch 1, seven between the pitches, and 8'-6" behind Pitch 2
 for the overhead door. Six feet between the two party rooms gives a cross
 aisle rather than a dead slot.
 
@@ -251,6 +262,11 @@ hides the shell walls so you can see out.
 
 ## Notes
 
+- `wallRun()` builds its segments along local z and then rotates the group by
+  the run angle. That rotation is the run angle exactly. An earlier version
+  subtracted 90 degrees, which threw every wall in the model perpendicular to
+  its own run, so party room walls shot out across the pitches. There is a
+  regression test for it.
 - The turf markings are generated on a canvas at 8 pixels per foot, so line
   weight stays true at any pitch size and penalty areas scale without
   colliding.

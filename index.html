@@ -209,13 +209,13 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;
 
     <div class="markwrap">
       <svg id="mark" viewBox="-10 -8 89.5 207.5" aria-label="Suite 650 plan being marked out"></svg>
-      <div class="markcap">Base layout &middot; two pitches at 57&#39;-0&quot; &times; 68&#39;-0&quot;</div>
+      <div class="markcap">Base layout &middot; two pitches at 57&#39;-0&quot; &times; 64&#39;-0&quot;</div>
     </div>
   </section>
 
   <section class="stats">
     <div class="stat"><div class="k">Interior area</div><div class="v">13,309<small>SF</small></div></div>
-    <div class="stat"><div class="k">Turf, base layout</div><div class="v">7,752<small>SF</small></div></div>
+    <div class="stat"><div class="k">Turf, base layout</div><div class="v">7,296<small>SF</small></div></div>
     <div class="stat"><div class="k">Clear height</div><div class="v">32<small>FT</small></div></div>
     <div class="stat"><div class="k">Party seating</div><div class="v">48<small>PAX</small></div></div>
   </section>
@@ -226,8 +226,9 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;
       <h2>Nothing in the way</h2>
       <p>The structural grid falls on the demising lines, so the bay is a
       true clear span. Pitch length is limited by the shell, not by a column
-      you have to build around. Only the north strip is fixed: entry, office,
-      storage and two changing rooms with showers.</p>
+      you have to build around. Only the north strip is fixed: lobby, office,
+      storage, two changing rooms with showers, and the corridor serving
+      them.</p>
     </div>
     <div class="note">
       <div class="rule"></div>
@@ -258,7 +259,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;
 (function(){
 var SVG = 'http://www.w3.org/2000/svg';
 var svg = document.getElementById('mark');
-var W = 69.5, D = 191.5, BAND = 10;
+var W = 69.5, D = 191.5, BAND = 15;
 
 function el(n, a, cls){
   var e = document.createElementNS(SVG, n);
@@ -285,8 +286,8 @@ function inked(e, delay){
   return e;
 }
 
-var PITCHES = [[6,43,57,68],[6,118,57,68]];
-var PARTY = [[8,16,22,21],[36,16,22,21]];
+var PITCHES = [[6,48,57,64],[6,119,57,64]];
+var PARTY = [[8,21,22,21],[36,21,22,21]];
 
 /* fills first so the strokes land on top */
 add(el('rect', { x:0, y:0, width:W, height:BAND }, 'band fadein'), 1.5);
@@ -304,7 +305,7 @@ inked(el('rect', { x:0, y:0, width:W, height:D }, 'draw'), 0);
 inked(el('line', { x1:0, y1:BAND, x2:W, y2:BAND }, 'draw'), 0.7);
 
 /* the locked strip on the north wall */
-[[35.5,0,35.5,BAND],[45.5,0,45.5,BAND],[55.5,0,55.5,BAND],[62.5,0,62.5,BAND]]
+[[35.5,0,35.5,10],[45.5,0,45.5,10],[55.5,0,55.5,10],[62.5,0,62.5,10],[35.5,10,69.5,10]]
 .forEach(function(p, i){
   inked(el('line', { x1:p[0], y1:p[1], x2:p[2], y2:p[3] }, 'draw'), 0.9 + i*0.08);
 });
@@ -332,7 +333,7 @@ PITCHES.forEach(function(f, i){
 });
 
 /* labels */
-[['ENTRY',17.75,6.2],['OFFICE',40.5,6.2],['STOR',50.5,6.2],['WC/SH',59,6.2],['WC/SH',66,6.2]]
+[['ENTRY',17.75,8],['OFFICE',40.5,6.2],['STOR',50.5,6.2],['WC/SH',59,6.2],['WC/SH',66,6.2],['HALL',52.5,13.6]]
 .forEach(function(l, i){
   var t = el('text', { x:l[1], y:l[2], 'text-anchor':'middle' }, 'lbl fadein');
   t.textContent = l[0];
@@ -340,7 +341,7 @@ PITCHES.forEach(function(f, i){
 });
 
 /* the ball drops onto the north pitch centre spot */
-add(el('circle', { cx:34.5, cy:77, r:2.2 }, 'ball'));
+add(el('circle', { cx:34.5, cy:80, r:2.2 }, 'ball'));
 })();
 
 /* ---------------------------------------------------------- kick to enter */

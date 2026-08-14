@@ -32,36 +32,42 @@ var ROOMH = 10;   // interior partition height
    rooms get dragged there is no leftover corner. */
 
 var LOCKED = [
-  { id:'entry',  name:'Entry and Viewing', short:'ENTRY',  x:0,    z:0, w:35.5, d:10, kind:'tile',   col:'#C9D6C4' },
-  { id:'office', name:'Office',            short:'OFFICE', x:35.5, z:0, w:10,   d:10, kind:'carpet', col:'#B9A0D6' },
-  { id:'stor',   name:'Storage',           short:'STOR',   x:45.5, z:0, w:10,   d:10, kind:'seal',   col:'#9AA5A0' },
-  { id:'wcA',    name:'Changing Room A',   short:'WC/SH',  x:55.5, z:0, w:7,    d:10, kind:'tile',   col:'#8FA9C4' },
-  { id:'wcB',    name:'Changing Room B',   short:'WC/SH',  x:62.5, z:0, w:7,    d:10, kind:'tile',   col:'#8FA9C4' }
+  { id:'entry',  name:'Entry and Viewing', short:'ENTRY',  x:0,    z:0,  w:35.5, d:15, kind:'tile',   col:'#C9D6C4' },
+  { id:'office', name:'Office',            short:'OFFICE', x:35.5, z:0,  w:10,   d:10, kind:'carpet', col:'#B9A0D6' },
+  { id:'stor',   name:'Storage',           short:'STOR',   x:45.5, z:0,  w:10,   d:10, kind:'seal',   col:'#9AA5A0' },
+  { id:'wcA',    name:'Changing Room A',   short:'WC/SH',  x:55.5, z:0,  w:7,    d:10, kind:'tile',   col:'#8FA9C4' },
+  { id:'wcB',    name:'Changing Room B',   short:'WC/SH',  x:62.5, z:0,  w:7,    d:10, kind:'tile',   col:'#8FA9C4' },
+  { id:'hall',   name:'Back of House',     short:'HALL',   x:35.5, z:10, w:34,   d:5,  kind:'tile',   col:'#C9D6C4', circ:true }
 ];
 
 /* Partitions inside the locked cluster. Fixed because the rooms they bound
    are fixed. Party rooms carry their own walls and are not in this list. */
 
+/* Every back of house room opens onto the corridor, and the corridor opens
+   to the lobby at one end and to the floor at the other. Nothing is reached
+   by walking through anything else. */
+
 var LOCKED_WALLS = [
-  [0,    10, 35.5, 10, 0.18, 10],   // lobby opens wide to the floor
-  [35.5, 0,  35.5, 10, null, 0],
-  [35.5, 10, 45.5, 10, 0.50, 3.0],  // office
-  [45.5, 0,  45.5, 10, null, 0],
-  [45.5, 10, 55.5, 10, 0.50, 3.0],  // storage
-  [55.5, 0,  55.5, 10, null, 0],
-  [55.5, 10, 62.5, 10, 0.50, 3.0],  // changing room A
-  [62.5, 0,  62.5, 10, null, 0],
-  [62.5, 10, 69.5, 10, 0.50, 3.0]   // changing room B
+  [0,    15, 35.5, 15, 0.18, 10],   // lobby to the open floor
+  [35.5, 0,  35.5, 10, null, 0],    // lobby / office, corridor mouth left open
+  [45.5, 0,  45.5, 10, null, 0],    // office / storage
+  [55.5, 0,  55.5, 10, null, 0],    // storage / changing A
+  [62.5, 0,  62.5, 10, null, 0],    // changing A / changing B
+  [35.5, 10, 45.5, 10, 0.50, 3.0],  // office door
+  [45.5, 10, 55.5, 10, 0.50, 3.0],  // storage door
+  [55.5, 10, 62.5, 10, 0.50, 3.0],  // changing A door
+  [62.5, 10, 69.5, 10, 0.50, 3.0],  // changing B door
+  [35.5, 15, 69.5, 15, 0.87, 5]     // corridor to the floor, by the changing rooms
 ];
 
 var DEFAULT_ROOMS = [
-  { id:'partyA', name:'Party Room A', x:8,  z:16, w:22, d:21 },
-  { id:'partyB', name:'Party Room B', x:36, z:16, w:22, d:21 }
+  { id:'partyA', name:'Party Room A', x:8,  z:21, w:22, d:21 },
+  { id:'partyB', name:'Party Room B', x:36, z:21, w:22, d:21 }
 ];
 
 var DEFAULT_FIELDS = [
-  { id:'p1', name:'Pitch 1', x:6, z:43,  w:57, d:68 },
-  { id:'p2', name:'Pitch 2', x:6, z:118, w:57, d:68 }
+  { id:'p1', name:'Pitch 1', x:6, z:48,  w:57, d:64 },
+  { id:'p2', name:'Pitch 2', x:6, z:119, w:57, d:64 }
 ];
 
 var ENTRY = LOCKED[0];
@@ -216,8 +222,11 @@ function wallRun(x1, z1, x2, z2, h, m, door, dw){
       g.add(hd);
     }
   }
+  /* ang is measured from +z toward +x, and the segments are built along
+     local z, so the run angle IS the rotation. Subtracting 90 degrees here
+     threw every wall in the model perpendicular to its own run. */
   g.position.set((x1 + x2)/2, 0, (z1 + z2)/2);
-  g.rotation.y = ang - Math.PI/2;
+  g.rotation.y = ang;
   return g;
 }
 
@@ -341,7 +350,7 @@ function buildLocked(){
   var top = box(11, 0.35, 2.6, mat(0x2f3a34)); top.position.y = 3.4;
   var base = box(10.4, 3.4, 2.2, mat(C.cone)); base.position.y = 1.7;
   desk.add(top, base);
-  desk.position.set(16, 0, 6.6);
+  desk.position.set(16, 0, 10.5);
   g.add(desk);
 
   /* Each changing room: a 3'-0" transfer shower with a curb and glass panel,
@@ -385,10 +394,11 @@ function buildPeople(){
   var g = new THREE.Group();
   var cols = [0xff6b2c, 0xffb03a, 0x4aa3df, 0xf4f7f0, 0x8e5cd0, 0x35c08a];
   var spots = [
-    [8,6],[19,5],[30,7],[40,5],[3,25],[66,13],
-    [14,26],[24,30],[42,26],[52,31],
-    [SHELL.w/2-8,64],[SHELL.w/2+6,80],[SHELL.w/2-3,101],
-    [SHELL.w/2-10,140],[SHELL.w/2+9,156],[SHELL.w/2+2,178]
+    [8,6],[22,5],[30,11],[12,13],[40,5],
+    [48,12.5],[60,12.5],[66,18],
+    [14,30],[24,35],[42,30],[52,36],
+    [SHELL.w/2-8,66],[SHELL.w/2+6,82],[SHELL.w/2-3,104],
+    [SHELL.w/2-10,138],[SHELL.w/2+9,155],[SHELL.w/2+2,176]
   ];
   spots.forEach(function (s, i){
     var p = person(cols[i % cols.length]);
