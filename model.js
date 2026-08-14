@@ -27,32 +27,41 @@ var CUT = 11;     // cutaway wall height
 var WALLT = 0.67; // wall thickness
 var ROOMH = 10;   // interior partition height
 
+/* One uniform strip along the north wall, 10 feet deep, tiling the full
+   69'-6" of the bay. Nothing steps down into the floor, so however the party
+   rooms get dragged there is no leftover corner. */
+
 var LOCKED = [
-  { id:'entry',  name:'Entry and Viewing', x:0,    z:0,  w:22,   d:34, kind:'tile',   col:'#C9D6C4' },
-  { id:'office', name:'Office',            x:22,   z:21, w:11,   d:13, kind:'carpet', col:'#B9A0D6' },
-  { id:'equip',  name:'Equipment Storage', x:33,   z:21, w:12.5, d:13, kind:'seal',   col:'#9AA5A0' },
-  { id:'rest',   name:'Restrooms',         x:45.5, z:21, w:24,   d:13, kind:'tile',   col:'#8FA9C4' }
+  { id:'entry',  name:'Entry and Viewing', short:'ENTRY',  x:0,    z:0, w:35.5, d:10, kind:'tile',   col:'#C9D6C4' },
+  { id:'office', name:'Office',            short:'OFFICE', x:35.5, z:0, w:10,   d:10, kind:'carpet', col:'#B9A0D6' },
+  { id:'stor',   name:'Storage',           short:'STOR',   x:45.5, z:0, w:10,   d:10, kind:'seal',   col:'#9AA5A0' },
+  { id:'wcA',    name:'Changing Room A',   short:'WC/SH',  x:55.5, z:0, w:7,    d:10, kind:'tile',   col:'#8FA9C4' },
+  { id:'wcB',    name:'Changing Room B',   short:'WC/SH',  x:62.5, z:0, w:7,    d:10, kind:'tile',   col:'#8FA9C4' }
 ];
 
 /* Partitions inside the locked cluster. Fixed because the rooms they bound
    are fixed. Party rooms carry their own walls and are not in this list. */
 
 var LOCKED_WALLS = [
-  [22,   0,  22,   34,  0.74, 3.5],
-  [22,   21, 69.5, 21,  0.20, 3.5],
-  [33,   21, 33,   34,  0.50, 3.0],
-  [45.5, 21, 45.5, 34,  null, 0],
-  [22,   34, 69.5, 34,  0.62, 3.5]
+  [0,    10, 35.5, 10, 0.18, 10],   // lobby opens wide to the floor
+  [35.5, 0,  35.5, 10, null, 0],
+  [35.5, 10, 45.5, 10, 0.50, 3.0],  // office
+  [45.5, 0,  45.5, 10, null, 0],
+  [45.5, 10, 55.5, 10, 0.50, 3.0],  // storage
+  [55.5, 0,  55.5, 10, null, 0],
+  [55.5, 10, 62.5, 10, 0.50, 3.0],  // changing room A
+  [62.5, 0,  62.5, 10, null, 0],
+  [62.5, 10, 69.5, 10, 0.50, 3.0]   // changing room B
 ];
 
 var DEFAULT_ROOMS = [
-  { id:'partyA', name:'Party Room A', x:22,   z:0, w:23.5, d:21 },
-  { id:'partyB', name:'Party Room B', x:45.5, z:0, w:24,   d:21 }
+  { id:'partyA', name:'Party Room A', x:8,  z:16, w:22, d:21 },
+  { id:'partyB', name:'Party Room B', x:36, z:16, w:22, d:21 }
 ];
 
 var DEFAULT_FIELDS = [
-  { id:'p1', name:'Pitch 1', x:6, z:40,  w:57, d:68 },
-  { id:'p2', name:'Pitch 2', x:6, z:115, w:57, d:68 }
+  { id:'p1', name:'Pitch 1', x:6, z:43,  w:57, d:68 },
+  { id:'p2', name:'Pitch 2', x:6, z:118, w:57, d:68 }
 ];
 
 var ENTRY = LOCKED[0];
@@ -314,8 +323,8 @@ function buildShell(){
     g.add(rib);
   }
 
-  var sf = box(16, 9, 0.3, mat(C.glass, {opacity:0.45}));
-  sf.position.set(10, 4.6, 0.1);
+  var sf = box(22, 9, 0.3, mat(C.glass, {opacity:0.45}));
+  sf.position.set(13, 4.6, 0.1);
   g.add(sf);
 
   return g;
@@ -332,14 +341,27 @@ function buildLocked(){
   var top = box(11, 0.35, 2.6, mat(0x2f3a34)); top.position.y = 3.4;
   var base = box(10.4, 3.4, 2.2, mat(C.cone)); base.position.y = 1.7;
   desk.add(top, base);
-  desk.position.set(11, 0, 26);
+  desk.position.set(16, 0, 6.6);
   g.add(desk);
 
-  for (var i = 0; i < 4; i++){
-    var st = box(4.8, 7, 0.15, mat(0xb7c2b4));
-    st.position.set(48 + i * 5.2, 3.5, 27.5);
-    g.add(st);
-  }
+  /* Each changing room: a 3'-0" transfer shower with a curb and glass panel,
+     one water closet and one lavatory. */
+  [55.5, 62.5].forEach(function (rx){
+    var pan = box(3.4, 0.35, 3.4, mat(0xdfe6df));
+    pan.position.set(rx + 2.2, 0.18, 2.2);
+    var curb = box(3.4, 0.55, 0.3, mat(0xc9d2c8));
+    curb.position.set(rx + 2.2, 0.28, 3.9);
+    var glass = box(0.14, 6.6, 3.4, mat(0x9fc6d8, { opacity:0.42 }));
+    glass.position.set(rx + 3.95, 3.3, 2.2);
+    var head = box(0.5, 0.3, 0.5, mat(0xbfc7bd));
+    head.position.set(rx + 2.2, 6.6, 1.0);
+
+    var wc = box(1.5, 2.4, 2.3, mat(0xf2f5ef));
+    wc.position.set(rx + 1.2, 1.2, 7.6);
+    var lav = box(2.0, 2.6, 1.5, mat(0xe4e9e2));
+    lav.position.set(rx + 5.4, 1.3, 8.4);
+    g.add(pan, curb, glass, head, wc, lav);
+  });
   return g;
 }
 
@@ -363,9 +385,10 @@ function buildPeople(){
   var g = new THREE.Group();
   var cols = [0xff6b2c, 0xffb03a, 0x4aa3df, 0xf4f7f0, 0x8e5cd0, 0x35c08a];
   var spots = [
-    [11,30],[8,12],[17,12],[27,27],[39,27],[52,30],[64,30],
-    [SHELL.w/2-8,60],[SHELL.w/2+6,74],[SHELL.w/2-3,96],
-    [SHELL.w/2-10,134],[SHELL.w/2+9,150],[SHELL.w/2+2,172]
+    [8,6],[19,5],[30,7],[40,5],[3,25],[66,13],
+    [14,26],[24,30],[42,26],[52,31],
+    [SHELL.w/2-8,64],[SHELL.w/2+6,80],[SHELL.w/2-3,101],
+    [SHELL.w/2-10,140],[SHELL.w/2+9,156],[SHELL.w/2+2,178]
   ];
   spots.forEach(function (s, i){
     var p = person(cols[i % cols.length]);

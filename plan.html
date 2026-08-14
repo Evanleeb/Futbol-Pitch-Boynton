@@ -217,9 +217,10 @@ body.fullstage .view{height:100dvh;position:fixed;inset:0;z-index:50}
         <h3>Locked program</h3>
         <div id="prog"></div>
         <p class="wetnote">
-          The restrooms sit on the sanitary stub and the entry anchors the
-          storefront, so these stay put. Moving the wet core means saw cutting
-          the slab and rerouting underground.
+          The changing rooms sit on the sanitary stub and the entry anchors
+          the storefront, so this strip stays put. Showers need floor drains
+          sloped to the sanitary line, so moving the wet core means saw
+          cutting the slab and rerouting underground.
         </p>
       </div>
 
@@ -354,6 +355,10 @@ function accessMap(){
   for (var j = 0; j < GD; j++){
     for (var i = 0; i < GW; i++){
       var cx = i + 0.5, cz = j + 0.5;
+      /* the grid is a whole number of feet and the bay is not, so the last
+         row and column fall outside the shell. Block them or they act as a
+         phantom corridor running the length of the wall. */
+      if (cx >= SHELL.w || cz >= SHELL.d){ blocked[j * GW + i] = 1; continue; }
       for (var k = 0; k < all.length; k++){
         var r = all[k];
         if (cx > r.x && cx < r.x + r.w && cz > r.z && cz < r.z + r.d){
@@ -491,8 +496,9 @@ function check(){
 function shortName(o){
   if (o.name === 'Party Room A') return 'Party A';
   if (o.name === 'Party Room B') return 'Party B';
-  if (o.name === 'Entry and Viewing') return 'entry';
-  if (o.name === 'Equipment Storage') return 'storage';
+  if (o.name === 'Entry and Viewing') return 'the entry';
+  if (o.name === 'Changing Room A') return 'changing A';
+  if (o.name === 'Changing Room B') return 'changing B';
   return o.name.toLowerCase();
 }
 
@@ -579,9 +585,9 @@ function drawPlan(){
     plan.appendChild(el('rect', { x:r.x, y:r.z, width:r.w, height:r.d,
       fill:'url(#lockhatch)', stroke:'rgba(244,247,240,.45)', 'stroke-width':.5 }));
     var t = el('text', { x:r.x + r.w/2, y:r.z + r.d/2 + 1.4, fill:'rgba(244,247,240,.6)',
-      'font-size':3.6, 'text-anchor':'middle', 'font-family':'IBM Plex Mono, monospace' });
-    t.textContent = r.id === 'entry' ? 'ENTRY' : r.id === 'rest' ? 'REST' :
-                    r.id === 'office' ? 'OFFICE' : 'STOR';
+      'font-size': r.w < 9 ? 2.9 : 3.6, 'text-anchor':'middle',
+      'font-family':'IBM Plex Mono, monospace' });
+    t.textContent = r.short || r.name.toUpperCase();
     plan.appendChild(t);
   });
 

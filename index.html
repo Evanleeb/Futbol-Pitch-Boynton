@@ -166,14 +166,15 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;
       <h2>Nothing in the way</h2>
       <p>The structural grid falls on the demising lines, so the bay is a
       true clear span. Pitch length is limited by the shell, not by a column
-      you have to build around. Only the entry and the wet core are fixed.</p>
+      you have to build around. Only the north strip is fixed: entry, office,
+      storage and two changing rooms with showers.</p>
     </div>
     <div class="note">
       <div class="rule"></div>
       <h2>Two party rooms, wherever you want them</h2>
       <p>Both rooms start off the entry so birthday traffic never crosses the
       turf, but they are dry rooms and you can put them anywhere in the suite.
-      Roughly 500 square feet each, four tables, twenty four seats.</p>
+      462 square feet each, four tables, twenty four seats.</p>
     </div>
     <div class="note">
       <div class="rule"></div>
@@ -197,7 +198,7 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;
 (function(){
 var SVG = 'http://www.w3.org/2000/svg';
 var svg = document.getElementById('mark');
-var W = 69.5, D = 191.5, BAND = 34;
+var W = 69.5, D = 191.5, BAND = 10;
 
 function el(n, a, cls){
   var e = document.createElementNS(SVG, n);
@@ -224,9 +225,15 @@ function inked(e, delay){
   return e;
 }
 
+var PITCHES = [[6,43,57,68],[6,118,57,68]];
+var PARTY = [[8,16,22,21],[36,16,22,21]];
+
 /* fills first so the strokes land on top */
 add(el('rect', { x:0, y:0, width:W, height:BAND }, 'band fadein'), 1.5);
-[[6,40,57,68],[6,115,57,68]].forEach(function(f, i){
+PARTY.forEach(function(r, i){
+  add(el('rect', { x:r[0], y:r[1], width:r[2], height:r[3] }, 'band fadein'), 1.6 + i*0.12);
+});
+PITCHES.forEach(function(f, i){
   add(el('rect', { x:f[0], y:f[1], width:f[2], height:f[3] }, 'turf fadein'), 1.7 + i*0.15);
 });
 
@@ -236,13 +243,22 @@ inked(el('rect', { x:0, y:0, width:W, height:D }, 'draw'), 0);
 /* front band line */
 inked(el('line', { x1:0, y1:BAND, x2:W, y2:BAND }, 'draw'), 0.7);
 
-/* room partitions */
-[[22,0,22,BAND],[45.5,0,45.5,21],[22,21,69.5,21],[33,21,33,BAND]].forEach(function(p, i){
+/* the locked strip on the north wall */
+[[35.5,0,35.5,BAND],[45.5,0,45.5,BAND],[55.5,0,55.5,BAND],[62.5,0,62.5,BAND]]
+.forEach(function(p, i){
   inked(el('line', { x1:p[0], y1:p[1], x2:p[2], y2:p[3] }, 'draw'), 0.9 + i*0.08);
 });
 
+/* party rooms */
+PARTY.forEach(function(r, i){
+  inked(el('rect', { x:r[0], y:r[1], width:r[2], height:r[3] }, 'draw'), 1.1 + i*0.12);
+  var t = el('text', { x:r[0]+r[2]/2, y:r[1]+r[3]/2+1.6, 'text-anchor':'middle' }, 'lblc fadein');
+  t.textContent = i ? 'PARTY B' : 'PARTY A';
+  add(t, 1.9 + i*0.1);
+});
+
 /* pitches */
-[[6,40,57,68],[6,115,57,68]].forEach(function(f, i){
+PITCHES.forEach(function(f, i){
   var t = 1.25 + i * 0.25;
   inked(el('rect', { x:f[0], y:f[1], width:f[2], height:f[3] }, 'draw'), t);
   inked(el('line', { x1:f[0], y1:f[1]+f[3]/2, x2:f[0]+f[2], y2:f[1]+f[3]/2 }, 'draw'), t+0.35);
@@ -256,7 +272,7 @@ inked(el('line', { x1:0, y1:BAND, x2:W, y2:BAND }, 'draw'), 0.7);
 });
 
 /* labels */
-[['ENTRY',11,18],['PARTY A',33.5,11],['PARTY B',57.5,11],['REST',57.5,28],['OFFICE',27.5,28]]
+[['ENTRY',17.75,6.2],['OFFICE',40.5,6.2],['STOR',50.5,6.2],['WC/SH',59,6.2],['WC/SH',66,6.2]]
 .forEach(function(l, i){
   var t = el('text', { x:l[1], y:l[2], 'text-anchor':'middle' }, 'lbl fadein');
   t.textContent = l[0];
@@ -264,7 +280,7 @@ inked(el('line', { x1:0, y1:BAND, x2:W, y2:BAND }, 'draw'), 0.7);
 });
 
 /* the ball drops onto the north pitch centre spot */
-add(el('circle', { cx:34.75, cy:74, r:2.2 }, 'ball'));
+add(el('circle', { cx:34.5, cy:77, r:2.2 }, 'ball'));
 })();
 </script>
 </body>
